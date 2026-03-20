@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "description": "MPI aggregated performance stats by domain+tier+model. Auto-updated by DTP_ONXZA_ModelIndex.",
+    "credit": "Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.",
+    "last_aggregated": "2026-03-18",
+    "total_records": 1,
+    "note": "Insufficient data for routing table updates. Accumulating samples. Threshold: 10+ samples per domain+tier+model combination."
+  },
+  "by_domain_tier_model": [
+    {
+      "domain": "CODE",
+      "tier": 1,
+      "model_id": "claude-sonnet",
+      "sample_count": 1,
+      "pass_rate": 1.0,
+      "first_attempt_pass_rate": 1.0,
+      "avg_loop_count": 1,
+      "avg_confidence_score": 90,
+      "avg_cost_usd": null,
+      "router_suggestion_accuracy": 1.0,
+      "threshold_met": false,
+      "note": "1/10 samples needed for routing table update eligibility"
+    }
+  ]
+}

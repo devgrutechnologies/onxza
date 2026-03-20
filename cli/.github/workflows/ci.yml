@@ -1,0 +1,53 @@
+# ONXZA CLI — Continuous Integration
+#
+# Runs on every PR and push to main.
+# Tests across macOS, Linux, Node 18/20/22.
+#
+# Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
+# Powered by DevGru US Inc. DBA DevGru Technology Products.
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }} / ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: ['18', '20', '22']
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify --version
+        run: node bin/onxza.js --version
+
+      - name: Verify help
+        run: node bin/onxza.js help
+
+      - name: Verify --json flag
+        run: node bin/onxza.js --json init --dry-run
+
+      - name: Check package size
+        run: npm pack --dry-run

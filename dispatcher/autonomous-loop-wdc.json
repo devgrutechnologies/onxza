@@ -1,0 +1,84 @@
+{
+  "name": "WDC — Autonomous Agent Loop",
+  "nodes": [
+    {
+      "parameters": { "rule": { "interval": [{ "field": "minutes", "minutesInterval": 5 }] } },
+      "name": "Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [240, 300],
+      "id": "trigger-wdc"
+    },
+    {
+      "parameters": {
+        "command": "python3 -c \"\nimport json, glob, os\nfrom pathlib import Path\nWS = Path.home() / '.openclaw/workspace'\ntickets = []\nfor f in glob.glob(str(WS / 'tickets/open/*.md')):\n    try:\n        content = open(f).read()\n        company = ''\n        for line in content.split('\\n'):\n            if 'company:' in line.lower(): company = line.split(':',1)[1].strip()\n        if 'WorldDestinationClub' in company or 'wdc' in company.lower():\n            tickets.append({'file': os.path.basename(f), 'path': f, 'content': content[:500]})\n    except: pass\nprint(json.dumps({'count': len(tickets), 'tickets': tickets[:5]}))\n\""
+      },
+      "name": "Check WDC Ticket Queue",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [440, 300],
+      "id": "check-tickets-wdc"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [{ "value1": "={{ JSON.parse($json.stdout).count }}", "operation": "larger", "value2": 0 }]
+        }
+      },
+      "name": "Has Tickets?",
+      "type": "n8n-nodes-base.if",
+      "position": [640, 300],
+      "id": "has-tickets-wdc"
+    },
+    {
+      "parameters": {
+        "command": "=python3 ~/.openclaw/workspace/projects/onxza/dispatcher/dispatcher.py 2>&1 | tail -3"
+      },
+      "name": "Run Dispatcher",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [840, 200],
+      "id": "run-dispatcher-wdc"
+    },
+    {
+      "parameters": {
+        "command": "python3 -c \"\nimport subprocess, datetime, json\nagents = [\n  ('wdc-content-blog', 'Write one new blog post about a high-traffic travel destination. Use local LLM via llm_queue. Save to ~/.openclaw/workspace/content/blogs/[slug]-$(date +%Y%m%d).md. Create a ticket for wdc-website-seo to optimize it.'),\n  ('wdc-affiliate-booking', 'Audit all destination pages for missing Booking.com affiliate links. Add AWIN tracking link (mid=18119, id=2803128) to any page lacking one. Create ticket for wdc-marketing-analytics to track click performance.'),\n  ('wdc-website-seo', 'Check top 5 blog posts for missing meta descriptions or title tag issues. Fix them. Create ticket for wdc-marketing-analytics to track ranking changes.'),\n  ('wdc-marketing-analytics', 'Review last 7 days of traffic patterns. Identify top performing content. Create ticket for wdc-content-blog to write more on winning topics.'),\n  ('wdc-research', 'Find 3 trending travel topics this week. Save brief to ~/.openclaw/workspace/companies/WorldDestinationClub/research/trends-$(date +%Y%m%d).md. Create ticket for wdc-content-blog.')\n]\nfor agent_id, prompt in agents:\n    print(f'Proactive loop: {agent_id}')\n\"\n"
+      },
+      "name": "Run Proactive Loop",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [840, 400],
+      "id": "proactive-loop-wdc"
+    },
+    {
+      "parameters": {
+        "command": "python3 ~/.openclaw/workspace/projects/onxza/dispatcher/llm_queue.py 2>&1 | tail -3"
+      },
+      "name": "Process LLM Queue",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [1040, 300],
+      "id": "process-llm-queue"
+    },
+    {
+      "parameters": {
+        "command": "date && echo 'WDC loop cycle complete' >> ~/.openclaw/workspace/logs/wdc-loop-$(date +%Y%m%d).log"
+      },
+      "name": "Log Cycle",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [1240, 300],
+      "id": "log-cycle-wdc"
+    }
+  ],
+  "connections": {
+    "Every 5 Minutes": { "main": [[{ "node": "Check WDC Ticket Queue", "type": "main", "index": 0 }]] },
+    "Check WDC Ticket Queue": { "main": [[{ "node": "Has Tickets?", "type": "main", "index": 0 }]] },
+    "Has Tickets?": {
+      "main": [
+        [{ "node": "Run Dispatcher", "type": "main", "index": 0 }],
+        [{ "node": "Run Proactive Loop", "type": "main", "index": 0 }]
+      ]
+    },
+    "Run Dispatcher": { "main": [[{ "node": "Process LLM Queue", "type": "main", "index": 0 }]] },
+    "Run Proactive Loop": { "main": [[{ "node": "Process LLM Queue", "type": "main", "index": 0 }]] },
+    "Process LLM Queue": { "main": [[{ "node": "Log Cycle", "type": "main", "index": 0 }]] }
+  },
+  "active": true,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["wdc", "autonomous", "loop"]
+}

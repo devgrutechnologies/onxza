@@ -1,0 +1,61 @@
+{
+  "name": "onxza",
+  "version": "0.1.0",
+  "description": "ONXZA CLI — AI Company Operating System. Run agent fleets, manage tickets, enforce quality, and orchestrate AI companies from the terminal.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": {
+    "name": "DevGru Technology Products",
+    "email": "hello@onxza.com",
+    "url": "https://onxza.com"
+  },
+  "homepage": "https://onxza.com",
+  "bugs": {
+    "url": "https://github.com/devgru-technology-products/onxza/issues",
+    "email": "hello@onxza.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devgru-technology-products/onxza.git",
+    "directory": "cli"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": ["darwin", "linux", "win32"],
+  "bin": {
+    "onxza": "bin/onxza.js"
+  },
+  "main": "src/program.js",
+  "files": [
+    "bin/",
+    "src/",
+    "LICENSE.md",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "start": "node bin/onxza.js",
+    "dev": "node bin/onxza.js",
+    "test": "node bin/onxza.js --version && node bin/onxza.js help",
+    "test:ci": "node bin/onxza.js --version && node bin/onxza.js --json status || true",
+    "prepublishOnly": "npm test",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version"
+  },
+  "dependencies": {
+    "commander": "^12.0.0"
+  },
+  "keywords": [
+    "onxza",
+    "faails",
+    "ai",
+    "agent",
+    "cli",
+    "devgru",
+    "llm",
+    "autonomous",
+    "company-os",
+    "agent-fleet"
+  ]
+}

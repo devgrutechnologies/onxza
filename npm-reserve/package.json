@@ -1,0 +1,20 @@
+{
+  "name": "onxza",
+  "version": "0.0.1-alpha",
+  "description": "ONXZA — Open-source AI Company Operating System. Built on FAAILS.",
+  "keywords": ["ai", "agent", "autonomous-ai", "faails", "llm", "open-source", "company-os"],
+  "homepage": "https://onxza.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devgrutechnologies/onxza"
+  },
+  "license": "MIT",
+  "author": "Aaron Gear <aaron@devgru.us> (https://devgru.us)",
+  "main": "index.js",
+  "bin": {
+    "onxza": "./bin/onxza.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

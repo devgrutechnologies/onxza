@@ -1,0 +1,60 @@
+# ONXZA PUBLIC REPOSITORY — ISOLATION BOUNDARY
+# This repository contains ONLY ONXZA/FAAILS source, docs, and specs.
+# Nothing from DevGru internal business operations ever belongs here.
+
+# Explicitly exclude everything outside this directory
+../../*
+../../../*
+
+# DevGru internal — never commit
+*.env
+*.env.*
+secrets/
+credentials/
+vision.md
+memory/
+memory.md
+MEMORY.md
+tickets/
+approvals/
+logs/
+companies/
+shared-learnings/
+projects/world-destination-club/
+projects/video-pipeline/
+projects/marcus-gear/
+projects/devgru-technology-products/
+openclaw.json
+*.bak
+pipeline-queue*
+crm.csv
+revenue.csv
+
+# Agent configs — never public
+workspace-*/
+AGENTS.md
+SOUL.md
+IDENTITY.md
+TOOLS.md
+HEARTBEAT.md
+
+# OS / editor
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+node_modules/
+dist/
+build/
+.next/
+out/
+*.log

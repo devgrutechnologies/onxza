@@ -1,0 +1,144 @@
+# ONXZA CLI — npm Publish Workflow
+#
+# Triggers: push of a version tag matching v[0-9]+.[0-9]+.[0-9]+
+#           (e.g. git tag v0.1.0 && git push --tags)
+#
+# Secrets required (set in GitHub repo Settings → Secrets and variables → Actions):
+#   NPM_TOKEN  — npm automation token with "Automation" access level
+#                https://www.npmjs.com/settings/<user>/tokens
+#
+# Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
+# Powered by DevGru US Inc. DBA DevGru Technology Products.
+
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'   # pre-release: v0.2.0-beta.1
+
+jobs:
+  # ── Gate: run tests before publishing ──────────────────────────────────────
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: ['18', '20', '22']
+      fail-fast: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify binary is executable
+        run: |
+          node bin/onxza.js --version
+          node bin/onxza.js help
+
+  # ── Publish to npm ──────────────────────────────────────────────────────────
+  publish:
+    name: Publish to npm
+    needs: test
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write   # for npm provenance attestation
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20 with npm registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Verify package.json version matches tag
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${{ steps.version.outputs.VERSION }}"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "ERROR: package.json version ($PKG_VERSION) does not match tag ($TAG_VERSION)"
+            exit 1
+          fi
+          echo "Version match confirmed: $PKG_VERSION"
+
+      - name: Check package contents (dry run)
+        run: npm pack --dry-run
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Post-publish verification
+        run: |
+          sleep 15
+          npm info onxza@${{ steps.version.outputs.VERSION }} version
+
+  # ── Create GitHub Release ───────────────────────────────────────────────────
+  release:
+    name: Create GitHub Release
+    needs: publish
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract changelog entry for this version
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          ENTRY=$(awk "/^## \[$VERSION\]/{found=1; next} found && /^## /{exit} found{print}" CHANGELOG.md)
+          echo "ENTRY<<EOF" >> $GITHUB_OUTPUT
+          echo "$ENTRY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "onxza v${{ github.ref_name }}"
+          body: |
+            ## onxza ${{ github.ref_name }}
+
+            Install:
+            ```bash
+            npm install -g onxza
+            ```
+
+            ### What's changed
+            ${{ steps.changelog.outputs.ENTRY }}
+
+            ---
+            *Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products.*
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}

@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "description": "ONXZA MoE Routing Table — auto-updated by MPI learning cycle",
+    "credit": "Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.",
+    "version": "1.0.0",
+    "initialized": "2026-03-18",
+    "last_updated": "2026-03-18",
+    "updated_by": "dtp-onxza-router",
+    "update_trigger": "initialization",
+    "mpi_samples_used": 0,
+    "next_review": "After 50 MPI samples accumulated"
+  },
+  "models": {
+    "script": { "provider": "local", "model": "shell/python", "cost_per_1k": 0, "context_k": null },
+    "local-fast": { "provider": "ollama", "model": "marcusgear/qwen9b", "cost_per_1k": 0, "context_k": 128 },
+    "local-quality": { "provider": "ollama", "model": "marcusgear/qwen27b", "cost_per_1k": 0, "context_k": 32 },
+    "local-code": { "provider": "ollama", "model": "carstenuhlig/omnicoder-9b", "cost_per_1k": 0, "context_k": 32 },
+    "grok-mini": { "provider": "xai", "model": "grok-3-mini", "cost_per_1k": 0.001, "context_k": 128 },
+    "grok": { "provider": "xai", "model": "grok-3", "cost_per_1k": 0.01, "context_k": 128 },
+    "claude-haiku": { "provider": "anthropic", "model": "claude-haiku-4-5", "cost_per_1k": 0.025, "context_k": 200 },
+    "claude-sonnet": { "provider": "anthropic", "model": "claude-sonnet-4-6", "cost_per_1k": 0.15, "context_k": 200 },
+    "claude-opus": { "provider": "anthropic", "model": "claude-opus-4-6", "cost_per_1k": 0.75, "context_k": 200 }
+  },
+  "routes": {
+    "tier3": {
+      "_comment": "Pure script — no LLM. Fastest, cheapest, most reliable.",
+      "default": "script",
+      "fallback": "local-fast",
+      "domains": {
+        "OPS": "script",
+        "INFRA": "script",
+        "ROUTING": "script"
+      }
+    },
+    "tier2": {
+      "_comment": "Script + model hybrid. Local LLM first.",
+      "default": "local-fast",
+      "fallback": "grok-mini",
+      "domains": {
+        "CONTENT": "local-quality",
+        "CODE": "local-code",
+        "RESEARCH": "local-quality",
+        "SALES": "local-fast",
+        "MARKETING": "local-fast",
+        "OPS": "local-fast",
+        "ROUTING": "local-fast",
+        "QA": "local-quality",
+        "INFRA": "local-code",
+        "FINANCE": "local-fast",
+        "LEGAL": "local-quality",
+        "SECURITY": "local-quality",
+        "VISION": "local-quality"
+      }
+    },
+    "tier1": {
+      "_comment": "Reasoning required. Local LLM valid if within capability. Cloud when needed.",
+      "default": "claude-sonnet",
+      "fallback": "claude-opus",
+      "domains": {
+        "VISION": "claude-sonnet",
+        "CODE": "claude-sonnet",
+        "RESEARCH": "grok",
+        "CONTENT": "grok",
+        "SECURITY": "claude-opus",
+        "LEGAL": "claude-opus",
+        "FINANCE": "claude-haiku",
+        "SALES": "grok",
+        "MARKETING": "grok",
+        "QA": "claude-haiku",
+        "ROUTING": "claude-sonnet",
+        "OPS": "claude-haiku",
+        "INFRA": "claude-sonnet"
+      }
+    }
+  },
+  "mpi_overrides": {
+    "_comment": "Populated by MPI learning cycle when sufficient samples exist. Overrides routing table.",
+    "samples": []
+  }
+}

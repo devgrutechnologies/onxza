@@ -1,0 +1,37 @@
+{
+  "dispatcher_version": "1.1.0",
+  "last_run": "2026-03-19T02:35:26",
+  "run_count": 64,
+  "last_run_summary": {
+    "run_at": "2026-03-19T02:35:26",
+    "tickets_scanned": 217,
+    "tickets_assigned": 209,
+    "delivered": 116,
+    "skipped_cadence": 91,
+    "unresolvable": 2,
+    "errors": 0,
+    "unassigned": 8,
+    "dry_run": false
+  },
+  "queue_depth": 0,
+  "total_notifications": 154,
+  "agent_cadences": {
+    "marcus/orchestrator": "continuous",
+    "ceo-orchestrator": "every 15 min",
+    "pm": "every 30 min",
+    "quality-director": "every 60 min",
+    "specialist": "on-task-completion"
+  },
+  "errors_recent": [
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-012 \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-013 \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-STRIPE-PRICE-APPROVAL \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-WDC-SPAWN-CONTENT-AFFILIATELINKER \u2192 WDC_Content_PM",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-000-ORCHESTRATOR-DISPATCH \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-001-WDC-REVENUE-WIRING \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-002-ONXZA-VERCEL-DEPLOY \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-003-ONXZA-PROACTIVE-WORK \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-004-DISPATCHER-FIX \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-005-AUTONOMOUS-AGENT-LOOP \u2192 MG_Parent_Orchestrator"
+  ]
+}

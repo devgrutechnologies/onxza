@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onxza.com/schemas/openclaw.schema.json",
+  "title": "openclaw.json",
+  "description": "ONXZA installation configuration schema v1.0.0",
+  "type": "object",
+  "required": ["$schemaVersion", "meta", "agents"],
+  "additionalProperties": true,
+  "properties": {
+    "$schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "SemVer schema version"
+    },
+    "meta": {
+      "type": "object",
+      "required": [],
+      "additionalProperties": true,
+      "properties": {
+        "lastTouchedVersion": { "type": "string" },
+        "lastTouchedAt": { "type": "string", "format": "date-time" },
+        "activeCompany": { "type": "string" }
+      }
+    },
+    "agents": {
+      "type": "object",
+      "required": ["list"],
+      "properties": {
+        "defaults": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "model": {
+              "type": "object",
+              "properties": {
+                "primary": { "type": "string" }
+              }
+            },
+            "workspace": { "type": "string" }
+          }
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "workspace"],
+            "additionalProperties": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64,
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "workspace": { "type": "string", "minLength": 1 },
+              "model": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "primary": { "type": "string" },
+                  "fallback": { "type": "string" }
+                }
+              },
+              "default": { "type": "boolean" },
+              "company": { "type": "string" },
+              "persistence": {
+                "type": "string",
+                "enum": ["persistent", "temporary"]
+              },
+              "heartbeat": {
+                "type": "object",
+                "required": ["enabled"],
+                "properties": {
+                  "enabled": { "type": "boolean" },
+                  "intervalMinutes": { "type": "number", "minimum": 1 },
+                  "cron": { "type": "string" }
+                }
+              },
+              "disabled": { "type": "boolean" },
+              "tags": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "companies": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["slug", "name"],
+            "additionalProperties": true,
+            "properties": {
+              "slug": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[A-Z][A-Za-z0-9]*$"
+              },
+              "name": { "type": "string", "minLength": 1 },
+              "parent": { "type": "string" },
+              "visionPath": { "type": "string" },
+              "sharedLearningsPath": { "type": "string" },
+              "created": { "type": "string" },
+              "disabled": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "dispatcher": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "scanIntervalMinutes": { "type": "number", "minimum": 1 },
+        "ticketBasePath": { "type": "string" },
+        "routing": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "enum": ["registry", "round-robin", "priority"]
+            }
+          }
+        }
+      }
+    },
+    "gateway": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "port": { "type": "integer", "minimum": 1024, "maximum": 65535 },
+        "mode": { "type": "string" },
+        "bind": { "type": "string" }
+      }
+    }
+  }
+}

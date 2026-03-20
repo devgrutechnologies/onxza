@@ -1,0 +1,1200 @@
+{
+  "last_run": "2026-03-19T02:35:26",
+  "run_count": 64,
+  "notifications_sent": {
+    "MGA-COO-ROUTING-NOTICE-20260318": {
+      "sent_at": "2026-03-18T19:47:02",
+      "agent_id": "mga-coo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260317-007": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-commissiontracker",
+      "raw_agent_id": "wdc-affiliate-commissiontracker",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-021-AARON-EXECUTIVE-PANEL-FULL": {
+      "sent_at": "2026-03-19T01:19:19",
+      "agent_id": "wdc-website-frontend",
+      "priority": "today",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-022": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-onxza-backend",
+      "priority": "critical",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-002": {
+      "sent_at": "2026-03-18T19:32:02",
+      "agent_id": "dtp-coo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-018": {
+      "sent_at": "2026-03-18T23:57:35",
+      "agent_id": "dtp-onxza-architect",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-019": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-onxza-backend",
+      "raw_agent_id": "dtp-onxza-backend",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-020": {
+      "sent_at": "2026-03-18T23:27:01",
+      "agent_id": "dtp-onxza-cli",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-021": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-onxza-backend",
+      "raw_agent_id": "dtp-onxza-backend",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-025": {
+      "sent_at": "2026-03-18T23:57:35",
+      "agent_id": "dtp-onxza-cli",
+      "priority": "medium",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-RESEARCH-BRIEF-001": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-research",
+      "raw_agent_id": "dtp-research",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-MGA-COMPETITIVE-BRIEF": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-research",
+      "raw_agent_id": "mga-research",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-MGP-001": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-editorial",
+      "raw_agent_id": "mgp-editorial",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-QUALITY-AUTONOMY-SCORING": {
+      "sent_at": "2026-03-18T19:15:33",
+      "agent_id": "mg-parent-qualitydirector",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-SMART-PLANNER-FRONTEND": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-frontend",
+      "raw_agent_id": "wdc-website-frontend",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-SPAWN-WDC-RESEARCH": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-agentdeveloper",
+      "raw_agent_id": "wdc-agentdeveloper",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-VERCEL-AUDIT": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-vercel",
+      "raw_agent_id": "wdc-website-vercel",
+      "priority": "today",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-AFFILIATE-BOOKING-LINKS": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-booking",
+      "raw_agent_id": "wdc-affiliate-booking",
+      "priority": "highest",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-AFFILIATE-GYG-LINKS": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-gyg",
+      "raw_agent_id": "wdc-affiliate-gyg",
+      "priority": "highest",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-AFFILIATE-PM-RETRAIN-1-5": {
+      "sent_at": "2026-03-18T20:17:02",
+      "agent_id": "wdc-affiliate-pm",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-ANALYTICS-DASHBOARD-ROUTED": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-marketing-analytics",
+      "raw_agent_id": "wdc-marketing-analytics",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-BLOG-BATCH1-DEPLOY": {
+      "sent_at": "2026-03-18T19:47:02",
+      "agent_id": "wdc-coo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-BLOG-BOOTSTRAP-TASK1": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-content-blog",
+      "raw_agent_id": "wdc-content-blog",
+      "priority": "critical",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-PHOTO-AUDIT": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-frontend",
+      "raw_agent_id": "wdc-website-frontend",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-RESEARCH-BRIEF-001": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-research",
+      "raw_agent_id": "wdc-research",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-SEO-BASELINE-AUDIT": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-seo",
+      "raw_agent_id": "wdc-website-seo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260319-007": {
+      "sent_at": "2026-03-19T01:37:52",
+      "agent_id": "dtp-onxza-cli",
+      "raw_agent_id": "dtp-onxza-cli",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-FLAG-AUTONOMY-WDC-CONTENT-BLOG-20260318": {
+      "sent_at": "2026-03-18T20:17:02",
+      "agent_id": "wdc-content-pm",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-FLAG-AUTONOMY-WDC-WEBSITE-SEO-20260318": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-cmo",
+      "raw_agent_id": "wdc-cmo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260319-192036-devgru-technology-products-dtp-ceo": {
+      "sent_at": "2026-03-18T23:57:35",
+      "agent_id": "dtp-ceo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260319-192036-devgru-technology-products-dtp-onxza-architect": {
+      "sent_at": "2026-03-18T23:27:01",
+      "agent_id": "dtp-onxza-architect",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260319-192036-devgru-technology-products-mg-parent-orchestrator": {
+      "sent_at": "2026-03-18T23:57:35",
+      "agent_id": "mg-parent-orchestrator",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-DTP-005": {
+      "sent_at": "2026-03-18T19:47:02",
+      "agent_id": "dtp-coo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "E2E-BIZPLAN-001-wdc-ceo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-ceo",
+      "raw_agent_id": "wdc-ceo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-BIZPLAN-002-mga-ceo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-ceo",
+      "raw_agent_id": "mga-ceo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-BIZPLAN-004-mgp-ceo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-ceo",
+      "raw_agent_id": "mgp-ceo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-004-mgp-coo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-coo",
+      "raw_agent_id": "mgp-coo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-005-mg-parent-agentdeveloper": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "mg-parent-agentdeveloper",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-006-mg-parent-security": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-security",
+      "raw_agent_id": "mg-parent-security",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-007-mg-parent-legal": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-legal",
+      "raw_agent_id": "mg-parent-legal",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-008-mg-parent-finance": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-finance",
+      "raw_agent_id": "mg-parent-finance",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-009-mg-parent-researcher": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-researcher",
+      "raw_agent_id": "mg-parent-researcher",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-010-mg-parent-executor": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-executor",
+      "raw_agent_id": "mg-parent-executor",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-011-mg-parent-brand": {
+      "sent_at": "2026-03-18T19:57:02",
+      "agent_id": "mg-parent-brand",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-MASTER-COMPILE-001": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-orchestrator",
+      "raw_agent_id": "mg-parent-orchestrator",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-001-wdc-coo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-coo",
+      "raw_agent_id": "wdc-coo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-002-mga-coo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-coo",
+      "raw_agent_id": "mga-coo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-003-dtp-coo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-coo",
+      "raw_agent_id": "dtp-coo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-004-mgp-cfo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-cfo",
+      "raw_agent_id": "mgp-cfo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-004-mgp-cmo": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-cmo",
+      "raw_agent_id": "mgp-cmo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-004-mgp-distribution": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-distribution",
+      "raw_agent_id": "mgp-distribution",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-004-mgp-editorial": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-editorial",
+      "raw_agent_id": "mgp-editorial",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-004-mgp-production": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-production",
+      "raw_agent_id": "mgp-production",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260318-200649-7531FB-agentdeveloper": {
+      "sent_at": "2026-03-18T23:57:35",
+      "agent_id": "dtp-agentdeveloper",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260318-200649-7531FB-ceo": {
+      "sent_at": "2026-03-18T23:22:32",
+      "agent_id": "dtp-ceo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260318-200649-7531FB-coo": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-coo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "E2E-HEALTH-012-mg-parent-qualitydirector": {
+      "sent_at": "2026-03-19T02:20:20",
+      "agent_id": "mg-parent-qualitydirector",
+      "raw_agent_id": "mg-parent-qualitydirector",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mg-parent-agentdeveloper-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-agentdeveloper",
+      "raw_agent_id": "mg-parent-agentdeveloper",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mg-parent-executor-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-executor",
+      "raw_agent_id": "mg-parent-executor",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mg-parent-finance-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-finance",
+      "raw_agent_id": "mg-parent-finance",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mg-parent-legal-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-legal",
+      "raw_agent_id": "mg-parent-legal",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mg-parent-researcher-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-researcher",
+      "raw_agent_id": "mg-parent-researcher",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mg-parent-security-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-security",
+      "raw_agent_id": "mg-parent-security",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-agentdeveloper-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-agentdeveloper",
+      "raw_agent_id": "mga-agentdeveloper",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-cfo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-cfo",
+      "raw_agent_id": "mga-cfo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-client-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-client-pm",
+      "raw_agent_id": "mga-client-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-client-sales-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-client-sales",
+      "raw_agent_id": "mga-client-sales",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-cmo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-cmo",
+      "raw_agent_id": "mga-cmo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-affiliate-awin-manager-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-awin-manager",
+      "raw_agent_id": "wdc-affiliate-awin-manager",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-affiliate-booking-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-booking",
+      "raw_agent_id": "wdc-affiliate-booking",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-affiliate-cj-manager-2026-03-18": {
+      "sent_at": "2026-03-18T20:42:02",
+      "agent_id": "wdc-affiliate-cj-manager",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-affiliate-commissiontracker-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-commissiontracker",
+      "raw_agent_id": "wdc-affiliate-commissiontracker",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-affiliate-gyg-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-gyg",
+      "raw_agent_id": "wdc-affiliate-gyg",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-agentdeveloper-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-agentdeveloper",
+      "raw_agent_id": "wdc-agentdeveloper",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-automation-n8n-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-automation-n8n",
+      "raw_agent_id": "wdc-automation-n8n",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-automation-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-automation-pm",
+      "raw_agent_id": "wdc-automation-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-automation-scheduler-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-automation-scheduler",
+      "raw_agent_id": "wdc-automation-scheduler",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-cfo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-cfo",
+      "raw_agent_id": "wdc-cfo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-cmo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-cmo",
+      "raw_agent_id": "wdc-cmo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-content-avatar-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-content-avatar",
+      "raw_agent_id": "wdc-content-avatar",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-content-blog-2026-03-18": {
+      "sent_at": "2026-03-18T23:47:02",
+      "agent_id": "wdc-content-blog",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-content-compositor-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-content-compositor",
+      "raw_agent_id": "wdc-content-compositor",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-content-tts-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-content-tts",
+      "raw_agent_id": "wdc-content-tts",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-legal-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-legal",
+      "raw_agent_id": "wdc-legal",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-marketing-analytics-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-marketing-analytics",
+      "raw_agent_id": "wdc-marketing-analytics",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-marketing-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-marketing-pm",
+      "raw_agent_id": "wdc-marketing-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-research-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-research",
+      "raw_agent_id": "wdc-research",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-security-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-security",
+      "raw_agent_id": "wdc-security",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-website-backend-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-backend",
+      "raw_agent_id": "wdc-website-backend",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-website-frontend-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-frontend",
+      "raw_agent_id": "wdc-website-frontend",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-website-seo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-seo",
+      "raw_agent_id": "wdc-website-seo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-website-vercel-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-vercel",
+      "raw_agent_id": "wdc-website-vercel",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-agentdeveloper-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-agentdeveloper",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-cfo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-cfo",
+      "raw_agent_id": "dtp-cfo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-cmo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-cmo",
+      "raw_agent_id": "dtp-cmo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-legal-2026-03-18": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-legal",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-architect-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-onxza-architect",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-backend-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-onxza-backend",
+      "raw_agent_id": "dtp-onxza-backend",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-cli-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-onxza-cli",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-community-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-onxza-community",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-devrel-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-onxza-devrel",
+      "raw_agent_id": "dtp-onxza-devrel",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-docs-2026-03-18": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-onxza-docs",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-llm-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-onxza-llm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-modelindex-2026-03-18": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-onxza-modelindex",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-pm-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-onxza-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-qa-2026-03-18": {
+      "sent_at": "2026-03-19T02:20:20",
+      "agent_id": "dtp-onxza-qa",
+      "raw_agent_id": "dtp-onxza-qa",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-router-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-onxza-router",
+      "raw_agent_id": "dtp-onxza-router",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-scriptengine-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-onxza-scriptengine",
+      "raw_agent_id": "dtp-onxza-scriptengine",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-skillsmarketplace-2026-03-18": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-onxza-skillsmarketplace",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-onxza-verification-2026-03-18": {
+      "sent_at": "2026-03-18T20:47:02",
+      "agent_id": "dtp-onxza-verification",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-research-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-research",
+      "raw_agent_id": "dtp-research",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-dtp-security-2026-03-18": {
+      "sent_at": "2026-03-18T23:42:03",
+      "agent_id": "dtp-security",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-appstore-compliance-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-appstore-compliance",
+      "raw_agent_id": "mga-appstore-compliance",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-appstore-manager-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-appstore-manager",
+      "raw_agent_id": "mga-appstore-manager",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-appstore-orchestrator-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-appstore-orchestrator",
+      "raw_agent_id": "mga-appstore-orchestrator",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-appstore-reviewanalyst-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-appstore-reviewanalyst",
+      "raw_agent_id": "mga-appstore-reviewanalyst",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-appstore-submitter-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-appstore-submitter",
+      "raw_agent_id": "mga-appstore-submitter",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-automation-n8n-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-automation-n8n",
+      "raw_agent_id": "mga-automation-n8n",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-automation-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-automation-pm",
+      "raw_agent_id": "mga-automation-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-business-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-business",
+      "raw_agent_id": "mga-business",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-client-digitaltwin-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-client-digitaltwin",
+      "raw_agent_id": "mga-client-digitaltwin",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-client-onboarding-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-client-onboarding",
+      "raw_agent_id": "mga-client-onboarding",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-client-proposal-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-client-proposal",
+      "raw_agent_id": "mga-client-proposal",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-content-brand-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-content-brand",
+      "raw_agent_id": "mga-content-brand",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-content-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-content-pm",
+      "raw_agent_id": "mga-content-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-content-social-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-content-social",
+      "raw_agent_id": "mga-content-social",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-content-video-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-content-video",
+      "raw_agent_id": "mga-content-video",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-legal-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-legal",
+      "raw_agent_id": "mga-legal",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-marketing-analytics-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-marketing-analytics",
+      "raw_agent_id": "mga-marketing-analytics",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-marketing-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-marketing-pm",
+      "raw_agent_id": "mga-marketing-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-research-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-research",
+      "raw_agent_id": "mga-research",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mga-security-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mga-security",
+      "raw_agent_id": "mga-security",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mgp-cfo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-cfo",
+      "raw_agent_id": "mgp-cfo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mgp-cmo-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-cmo",
+      "raw_agent_id": "mgp-cmo",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mgp-distribution-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-distribution",
+      "raw_agent_id": "mgp-distribution",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mgp-editorial-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-editorial",
+      "raw_agent_id": "mgp-editorial",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-mgp-production-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mgp-production",
+      "raw_agent_id": "mgp-production",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-affiliate-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-affiliate-pm",
+      "raw_agent_id": "wdc-affiliate-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "HC2-wdc-content-pm-2026-03-18": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-content-pm",
+      "raw_agent_id": "wdc-content-pm",
+      "priority": "HIGH",
+      "delivery_status": "delivered"
+    },
+    "TICKET-GITHUB-DEVGRU-ACCOUNT-CREATE": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "dtp-agentdeveloper",
+      "raw_agent_id": "dtp-agentdeveloper",
+      "priority": "critical",
+      "delivery_status": "delivered"
+    },
+    "TICKET-WDC-RESEARCH-SUBSCRIPTION-VALUE": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-research",
+      "raw_agent_id": "wdc-research",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "CDP-20260319-192036-devgru-technology-products-SYNTHESIS": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-marcus",
+      "raw_agent_id": "mg-parent-marcus",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "NOTIFY-INTAKE-001-complete": {
+      "sent_at": "2026-03-19T01:19:19",
+      "agent_id": "main",
+      "priority": "medium",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260317-017": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-marcus",
+      "raw_agent_id": "marcus",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-WDC-SEO-METADATA-EXECUTION": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-seo",
+      "raw_agent_id": "wdc-website-seo",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260317-016": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-marcus",
+      "raw_agent_id": "MG_Parent_Marcus",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-012": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-marcus",
+      "raw_agent_id": "MG_Parent_Marcus",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-013": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-marcus",
+      "raw_agent_id": "MG_Parent_Marcus",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-021": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "wdc-website-frontend",
+      "raw_agent_id": "wdc-website-frontend",
+      "priority": "today",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260318-STRIPE-PRICE-APPROVAL": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-marcus",
+      "raw_agent_id": "MG_Parent_Marcus",
+      "priority": "high",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260319-000": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-orchestrator",
+      "raw_agent_id": "MG_Parent_Orchestrator",
+      "priority": "P0-URGENT",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260319-001": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-orchestrator",
+      "raw_agent_id": "MG_Parent_Orchestrator",
+      "priority": "P1-CRITICAL",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260319-002": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-orchestrator",
+      "raw_agent_id": "MG_Parent_Orchestrator",
+      "priority": "P1-HIGH",
+      "delivery_status": "delivered"
+    },
+    "TICKET-20260319-004": {
+      "sent_at": "2026-03-19T02:35:26",
+      "agent_id": "mg-parent-orchestrator",
+      "raw_agent_id": "MG_Parent_Orchestrator",
+      "priority": "P1-CRITICAL",
+      "delivery_status": "delivered"
+    }
+  },
+  "agent_last_notified": {
+    "mga-coo": "2026-03-19T02:35:26",
+    "wdc-affiliate-commissiontracker": "2026-03-19T02:35:26",
+    "wdc-website-frontend": "2026-03-19T02:35:26",
+    "dtp-onxza-backend": "2026-03-19T02:35:26",
+    "dtp-coo": "2026-03-19T02:35:26",
+    "dtp-onxza-architect": "2026-03-18T23:57:35",
+    "dtp-onxza-cli": "2026-03-19T01:37:52",
+    "dtp-research": "2026-03-19T02:35:26",
+    "mga-research": "2026-03-19T02:35:26",
+    "mgp-editorial": "2026-03-19T02:35:26",
+    "mg-parent-qualitydirector": "2026-03-19T02:20:20",
+    "wdc-agentdeveloper": "2026-03-19T02:35:26",
+    "wdc-website-vercel": "2026-03-19T02:35:26",
+    "wdc-affiliate-booking": "2026-03-19T02:35:26",
+    "wdc-affiliate-gyg": "2026-03-19T02:35:26",
+    "wdc-affiliate-pm": "2026-03-19T02:35:26",
+    "wdc-marketing-analytics": "2026-03-19T02:35:26",
+    "wdc-coo": "2026-03-19T02:35:26",
+    "wdc-content-blog": "2026-03-19T02:35:26",
+    "wdc-research": "2026-03-19T02:35:26",
+    "wdc-website-seo": "2026-03-19T02:35:26",
+    "wdc-content-pm": "2026-03-19T02:35:26",
+    "wdc-cmo": "2026-03-19T02:35:26",
+    "dtp-ceo": "2026-03-18T23:57:35",
+    "mg-parent-orchestrator": "2026-03-19T02:35:26",
+    "wdc-ceo": "2026-03-19T02:35:26",
+    "mga-ceo": "2026-03-19T02:35:26",
+    "mgp-ceo": "2026-03-19T02:35:26",
+    "mgp-coo": "2026-03-19T02:35:26",
+    "mg-parent-agentdeveloper": "2026-03-19T02:35:26",
+    "mg-parent-security": "2026-03-19T02:35:26",
+    "mg-parent-legal": "2026-03-19T02:35:26",
+    "mg-parent-finance": "2026-03-19T02:35:26",
+    "mg-parent-researcher": "2026-03-19T02:35:26",
+    "mg-parent-executor": "2026-03-19T02:35:26",
+    "mg-parent-brand": "2026-03-18T19:57:02",
+    "mgp-cfo": "2026-03-19T02:35:26",
+    "mgp-cmo": "2026-03-19T02:35:26",
+    "mgp-distribution": "2026-03-19T02:35:26",
+    "mgp-production": "2026-03-19T02:35:26",
+    "dtp-agentdeveloper": "2026-03-19T02:35:26",
+    "mga-agentdeveloper": "2026-03-19T02:35:26",
+    "mga-cfo": "2026-03-19T02:35:26",
+    "mga-client-pm": "2026-03-19T02:35:26",
+    "mga-client-sales": "2026-03-19T02:35:26",
+    "mga-cmo": "2026-03-19T02:35:26",
+    "wdc-affiliate-awin-manager": "2026-03-19T02:35:26",
+    "wdc-affiliate-cj-manager": "2026-03-18T20:42:02",
+    "wdc-automation-n8n": "2026-03-19T02:35:26",
+    "wdc-automation-pm": "2026-03-19T02:35:26",
+    "wdc-automation-scheduler": "2026-03-19T02:35:26",
+    "wdc-cfo": "2026-03-19T02:35:26",
+    "wdc-content-avatar": "2026-03-19T02:35:26",
+    "wdc-content-compositor": "2026-03-19T02:35:26",
+    "wdc-content-tts": "2026-03-19T02:35:26",
+    "wdc-legal": "2026-03-19T02:35:26",
+    "wdc-marketing-pm": "2026-03-19T02:35:26",
+    "wdc-security": "2026-03-19T02:35:26",
+    "wdc-website-backend": "2026-03-19T02:35:26",
+    "dtp-cfo": "2026-03-19T02:35:26",
+    "dtp-cmo": "2026-03-19T02:35:26",
+    "dtp-legal": "2026-03-18T23:42:03",
+    "dtp-onxza-community": "2026-03-18T20:47:02",
+    "dtp-onxza-devrel": "2026-03-19T02:35:26",
+    "dtp-onxza-docs": "2026-03-18T23:42:03",
+    "dtp-onxza-llm": "2026-03-18T20:47:02",
+    "dtp-onxza-modelindex": "2026-03-18T23:42:03",
+    "dtp-onxza-pm": "2026-03-18T20:47:02",
+    "dtp-onxza-qa": "2026-03-19T02:20:20",
+    "dtp-onxza-router": "2026-03-19T02:35:26",
+    "dtp-onxza-scriptengine": "2026-03-19T02:35:26",
+    "dtp-onxza-skillsmarketplace": "2026-03-18T23:42:03",
+    "dtp-onxza-verification": "2026-03-18T20:47:02",
+    "dtp-security": "2026-03-18T23:42:03",
+    "mga-appstore-compliance": "2026-03-19T02:35:26",
+    "mga-appstore-manager": "2026-03-19T02:35:26",
+    "mga-appstore-orchestrator": "2026-03-19T02:35:26",
+    "mga-appstore-reviewanalyst": "2026-03-19T02:35:26",
+    "mga-appstore-submitter": "2026-03-19T02:35:26",
+    "mga-automation-n8n": "2026-03-19T02:35:26",
+    "mga-automation-pm": "2026-03-19T02:35:26",
+    "mga-business": "2026-03-19T02:35:26",
+    "mga-client-digitaltwin": "2026-03-19T02:35:26",
+    "mga-client-onboarding": "2026-03-19T02:35:26",
+    "mga-client-proposal": "2026-03-19T02:35:26",
+    "mga-content-brand": "2026-03-19T02:35:26",
+    "mga-content-pm": "2026-03-19T02:35:26",
+    "mga-content-social": "2026-03-19T02:35:26",
+    "mga-content-video": "2026-03-19T02:35:26",
+    "mga-legal": "2026-03-19T02:35:26",
+    "mga-marketing-analytics": "2026-03-19T02:35:26",
+    "mga-marketing-pm": "2026-03-19T02:35:26",
+    "mga-security": "2026-03-19T02:35:26",
+    "mg-parent-marcus": "2026-03-19T02:35:26",
+    "main": "2026-03-19T01:19:19",
+    "marcus": "2026-03-19T01:19:19"
+  },
+  "queue": [],
+  "errors": [
+    "2026-03-18T23:42:03: Delivery failed: TICKET-RECOVERY-20260319-044036 \u2192 main",
+    "2026-03-18T23:47:02: Delivery failed: CDP-20260319-192036-devgru-technology-products-SYNTHESIS \u2192 mg-parent-marcus",
+    "2026-03-18T23:47:02: Delivery failed: E2E-HEALTH-002-MGA-TEAM-PING \u2192 all-mga-agents",
+    "2026-03-18T23:47:02: Delivery failed: NOTIFY-INTAKE-001-complete \u2192 main",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260317-016 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260317-017 \u2192 marcus",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260318-005-WDC-RESEND-CREDENTIALS-NEEDED \u2192 Aaron Gear",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260318-012 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260318-013 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260318-STRIPE-PRICE-APPROVAL \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-20260318-WDC-SPAWN-CONTENT-AFFILIATELINKER \u2192 WDC_Content_PM",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-RECOVERY-20260319-044014 \u2192 main",
+    "2026-03-18T23:47:02: Delivery failed: TICKET-RECOVERY-20260319-044036 \u2192 main",
+    "2026-03-18T23:52:02: Delivery failed: CDP-20260319-192036-devgru-technology-products-SYNTHESIS \u2192 mg-parent-marcus",
+    "2026-03-18T23:52:02: Delivery failed: E2E-HEALTH-002-MGA-TEAM-PING \u2192 all-mga-agents",
+    "2026-03-18T23:52:02: Delivery failed: NOTIFY-INTAKE-001-complete \u2192 main",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260317-016 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260317-017 \u2192 marcus",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260318-005-WDC-RESEND-CREDENTIALS-NEEDED \u2192 Aaron Gear",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260318-012 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260318-013 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260318-STRIPE-PRICE-APPROVAL \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-20260318-WDC-SPAWN-CONTENT-AFFILIATELINKER \u2192 WDC_Content_PM",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-RECOVERY-20260319-044014 \u2192 main",
+    "2026-03-18T23:52:02: Delivery failed: TICKET-RECOVERY-20260319-044036 \u2192 main",
+    "2026-03-18T23:57:35: Delivery failed: CDP-20260319-192036-devgru-technology-products-SYNTHESIS \u2192 mg-parent-marcus",
+    "2026-03-18T23:57:35: Delivery failed: E2E-HEALTH-002-MGA-TEAM-PING \u2192 all-mga-agents",
+    "2026-03-18T23:57:35: Delivery failed: NOTIFY-INTAKE-001-complete \u2192 main",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260317-016 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260317-017 \u2192 marcus",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260318-005-WDC-RESEND-CREDENTIALS-NEEDED \u2192 Aaron Gear",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260318-012 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260318-013 \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260318-STRIPE-PRICE-APPROVAL \u2192 MG_Parent_Marcus",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-20260318-WDC-SPAWN-CONTENT-AFFILIATELINKER \u2192 WDC_Content_PM",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-RECOVERY-20260319-044014 \u2192 main",
+    "2026-03-18T23:57:35: Delivery failed: TICKET-RECOVERY-20260319-044036 \u2192 main",
+    "2026-03-19T01:19:19: Delivery failed: E2E-HEALTH-002-MGA-TEAM-PING \u2192 all-mga-agents",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260317-016 \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-005-WDC-RESEND-CREDENTIALS-NEEDED \u2192 Aaron Gear",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-012 \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-013 \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-STRIPE-PRICE-APPROVAL \u2192 MG_Parent_Marcus",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260318-WDC-SPAWN-CONTENT-AFFILIATELINKER \u2192 WDC_Content_PM",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-000-ORCHESTRATOR-DISPATCH \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-001-WDC-REVENUE-WIRING \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-002-ONXZA-VERCEL-DEPLOY \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-003-ONXZA-PROACTIVE-WORK \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-004-DISPATCHER-FIX \u2192 MG_Parent_Orchestrator",
+    "2026-03-19T01:19:19: Delivery failed: TICKET-20260319-005-AUTONOMOUS-AGENT-LOOP \u2192 MG_Parent_Orchestrator"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "_comment": "ONXZA-LLM anonymization term list. Add known company names, project names, and agent IDs here. Pipeline replaces all matches before training inclusion.",
+  "companies": [
+    "DevGru",
+    "DevGru Technology Products",
+    "DevGru US Inc",
+    "WorldDestinationClub",
+    "World Destination Club",
+    "WDC"
+  ],
+  "agent_ids": [
+    "DTP_ONXZA_PM",
+    "DTP_ONXZA_LLM",
+    "DTP_ONXZA_ScriptEngine",
+    "DTP_ONXZA_ModelIndex",
+    "DTP_ONXZA_Verification",
+    "MG_Parent_Marcus",
+    "MG_Parent_AgentDeveloper",
+    "MG_Parent_QualityDirector",
+    "WDC_CEO",
+    "WDC_COO",
+    "WDC_PM"
+  ],
+  "replacement_tags": {
+    "company": "[COMPANY]",
+    "travel_company": "[TRAVEL_COMPANY]",
+    "tech_company": "[TECH_COMPANY]",
+    "person": "[PERSON]",
+    "ceo": "[CEO]",
+    "pm_agent": "[PM_AGENT]",
+    "llm_agent": "[LLM_AGENT]",
+    "verification_agent": "[VERIFICATION_AGENT]",
+    "specialist_agent": "[SPECIALIST_AGENT]",
+    "credential": "[CREDENTIAL]",
+    "email": "[EMAIL]",
+    "url": "[URL]",
+    "internal_url": "[INTERNAL_URL]",
+    "phone": "[PHONE]",
+    "project": "[PROJECT]"
+  },
+  "regex_patterns": {
+    "email": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b",
+    "api_key_candidate": "\\b[A-Za-z0-9_-]{32,}\\b",
+    "url": "https?://[^\\s]+",
+    "phone": "\\b(?:\\+?1[-.]?)?\\(?[0-9]{3}\\)?[-.]?[0-9]{3}[-.]?[0-9]{4}\\b"
+  }
+}

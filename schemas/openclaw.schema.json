@@ -1,0 +1,622 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onxza.com/schemas/openclaw/v1.0.0/openclaw.schema.json",
+  "title": "openclaw.json",
+  "description": "ONXZA central registry schema — the source of truth for all registered agents, companies, authentication, channels, gateway, and system configuration.",
+  "type": "object",
+  "required": ["$schemaVersion", "meta", "agents"],
+  "additionalProperties": false,
+  "properties": {
+    "$schemaVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "SemVer of the schema this file conforms to. Required for validation and migration."
+    },
+    "meta": {
+      "$ref": "#/$defs/Meta"
+    },
+    "wizard": {
+      "$ref": "#/$defs/Wizard"
+    },
+    "auth": {
+      "$ref": "#/$defs/Auth"
+    },
+    "agents": {
+      "$ref": "#/$defs/Agents"
+    },
+    "companies": {
+      "$ref": "#/$defs/Companies"
+    },
+    "dispatcher": {
+      "$ref": "#/$defs/Dispatcher"
+    },
+    "tools": {
+      "$ref": "#/$defs/Tools"
+    },
+    "broadcast": {
+      "$ref": "#/$defs/Broadcast"
+    },
+    "commands": {
+      "$ref": "#/$defs/Commands"
+    },
+    "session": {
+      "$ref": "#/$defs/Session"
+    },
+    "hooks": {
+      "$ref": "#/$defs/Hooks"
+    },
+    "channels": {
+      "$ref": "#/$defs/Channels"
+    },
+    "gateway": {
+      "$ref": "#/$defs/Gateway"
+    },
+    "skills": {
+      "$ref": "#/$defs/Skills"
+    },
+    "plugins": {
+      "$ref": "#/$defs/Plugins"
+    }
+  },
+  "$defs": {
+    "SemVer": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version string (MAJOR.MINOR.PATCH)."
+    },
+    "AgentId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "Lowercase kebab-case agent identifier."
+    },
+    "CompanySlug": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$",
+      "minLength": 1,
+      "maxLength": 32,
+      "description": "PascalCase company slug (e.g. MG, WDC, MGA, DTP, MGP)."
+    },
+    "ModelRef": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+/[a-z0-9._-]+$",
+      "description": "Provider-qualified model reference (e.g. anthropic/claude-sonnet-4-6)."
+    },
+    "ISO8601": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp."
+    },
+    "AbsolutePath": {
+      "type": "string",
+      "pattern": "^/",
+      "description": "Absolute filesystem path."
+    },
+
+    "Meta": {
+      "type": "object",
+      "description": "File-level metadata — when this config was last touched and by which ONXZA version.",
+      "required": ["lastTouchedVersion", "lastTouchedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "lastTouchedVersion": {
+          "type": "string",
+          "description": "ONXZA CLI version that last wrote this file."
+        },
+        "lastTouchedAt": {
+          "$ref": "#/$defs/ISO8601",
+          "description": "Timestamp of last write."
+        }
+      }
+    },
+
+    "Wizard": {
+      "type": "object",
+      "description": "Setup wizard state — tracks onboarding completion.",
+      "additionalProperties": false,
+      "properties": {
+        "lastRunAt": { "$ref": "#/$defs/ISO8601" },
+        "lastRunVersion": { "type": "string" },
+        "lastRunCommand": { "type": "string" },
+        "lastRunMode": {
+          "type": "string",
+          "enum": ["local", "cloud", "hybrid"]
+        }
+      }
+    },
+
+    "Auth": {
+      "type": "object",
+      "description": "Authentication profiles for LLM providers and external services.",
+      "required": ["profiles"],
+      "additionalProperties": false,
+      "properties": {
+        "profiles": {
+          "type": "object",
+          "description": "Keyed by 'provider:profile-name'. Each entry defines credentials for one provider account.",
+          "additionalProperties": {
+            "$ref": "#/$defs/AuthProfile"
+          }
+        }
+      }
+    },
+    "AuthProfile": {
+      "type": "object",
+      "required": ["provider", "mode"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Provider name (e.g. anthropic, openai, ollama)."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["token", "oauth", "none"],
+          "description": "Auth mode. Actual secrets are NOT stored here — use environment variables or a secrets manager."
+        }
+      }
+    },
+
+    "Agents": {
+      "type": "object",
+      "description": "Agent registry — every persistent daemon agent must be listed here.",
+      "required": ["list"],
+      "additionalProperties": false,
+      "properties": {
+        "defaults": {
+          "$ref": "#/$defs/AgentDefaults"
+        },
+        "list": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AgentEntry" },
+          "description": "Ordered list of all registered agents. The first entry with 'default: true' is the primary agent."
+        }
+      }
+    },
+    "AgentDefaults": {
+      "type": "object",
+      "description": "Default values inherited by all agents unless overridden.",
+      "additionalProperties": false,
+      "properties": {
+        "model": {
+          "$ref": "#/$defs/AgentModel"
+        },
+        "workspace": {
+          "$ref": "#/$defs/AbsolutePath",
+          "description": "Default workspace root."
+        },
+        "memorySearch": {
+          "$ref": "#/$defs/MemorySearchConfig"
+        },
+        "heartbeat": {
+          "$ref": "#/$defs/HeartbeatConfig"
+        }
+      }
+    },
+    "AgentModel": {
+      "type": "object",
+      "description": "Model configuration for an agent.",
+      "required": ["primary"],
+      "additionalProperties": false,
+      "properties": {
+        "primary": {
+          "$ref": "#/$defs/ModelRef",
+          "description": "Primary model for this agent."
+        },
+        "fallback": {
+          "$ref": "#/$defs/ModelRef",
+          "description": "Fallback model if primary is unavailable or rate-limited."
+        }
+      }
+    },
+    "MemorySearchConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extraPaths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Additional paths (relative to workspace) to include in memory search."
+        }
+      }
+    },
+    "HeartbeatConfig": {
+      "type": "object",
+      "description": "Heartbeat schedule configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "intervalMinutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1440,
+          "description": "Heartbeat interval in minutes."
+        },
+        "cron": {
+          "type": "string",
+          "description": "Cron expression override (takes precedence over intervalMinutes)."
+        }
+      }
+    },
+    "AgentEntry": {
+      "type": "object",
+      "description": "A single registered agent.",
+      "required": ["id", "workspace"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/AgentId",
+          "description": "Unique agent identifier. Must match workspace naming convention."
+        },
+        "default": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, this is the primary/default agent for the installation."
+        },
+        "workspace": {
+          "$ref": "#/$defs/AbsolutePath",
+          "description": "Absolute path to agent workspace directory."
+        },
+        "model": {
+          "$ref": "#/$defs/AgentModel"
+        },
+        "company": {
+          "$ref": "#/$defs/CompanySlug",
+          "description": "Company this agent belongs to."
+        },
+        "persistence": {
+          "type": "string",
+          "enum": ["persistent", "temporary"],
+          "default": "persistent",
+          "description": "Agent persistence class per FAAILS-001."
+        },
+        "heartbeat": {
+          "$ref": "#/$defs/HeartbeatConfig"
+        },
+        "memorySearch": {
+          "$ref": "#/$defs/MemorySearchConfig"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, agent is registered but will not be activated by the dispatcher."
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional tags for filtering and routing (e.g. 'security', 'frontend', 'ceo')."
+        }
+      }
+    },
+
+    "Companies": {
+      "type": "object",
+      "description": "Company registry — all companies managed by this ONXZA installation.",
+      "additionalProperties": false,
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CompanyEntry" },
+          "description": "All registered companies."
+        }
+      }
+    },
+    "CompanyEntry": {
+      "type": "object",
+      "description": "A single registered company.",
+      "required": ["slug", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "slug": {
+          "$ref": "#/$defs/CompanySlug",
+          "description": "Short identifier used in agent naming and directory paths."
+        },
+        "name": {
+          "type": "string",
+          "description": "Full legal or display name of the company."
+        },
+        "parent": {
+          "$ref": "#/$defs/CompanySlug",
+          "description": "Parent company slug (for subsidiaries)."
+        },
+        "visionPath": {
+          "type": "string",
+          "description": "Relative path to the company's vision.md from workspace root."
+        },
+        "sharedLearningsPath": {
+          "type": "string",
+          "description": "Relative path to shared-learnings directory for this company."
+        },
+        "created": {
+          "$ref": "#/$defs/ISO8601"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+
+    "Dispatcher": {
+      "type": "object",
+      "description": "Dispatcher configuration — controls ticket scanning, routing, and agent polling.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "scanIntervalMinutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60,
+          "default": 5,
+          "description": "How often the dispatcher scans tickets/open/ for new assignments."
+        },
+        "ticketBasePath": {
+          "type": "string",
+          "default": "tickets",
+          "description": "Relative path from workspace to ticket directories."
+        },
+        "routing": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "enum": ["registry", "moe", "hybrid"],
+              "default": "registry",
+              "description": "Routing strategy: registry (static lookup), moe (Mixture of Experts), hybrid (registry + MoE fallback)."
+            },
+            "moeModelRef": {
+              "$ref": "#/$defs/ModelRef",
+              "description": "Model used for MoE routing decisions (only used if strategy is moe or hybrid)."
+            }
+          }
+        },
+        "pollingCadence": {
+          "type": "object",
+          "description": "Default polling cadence by agent role tier (overridable per agent via heartbeat config).",
+          "additionalProperties": false,
+          "properties": {
+            "principal": { "type": "integer", "description": "Minutes — e.g. 0 for continuous." },
+            "orchestrator": { "type": "integer" },
+            "departmentLead": { "type": "integer" },
+            "specialist": { "type": "integer" },
+            "quality": { "type": "integer" }
+          }
+        }
+      }
+    },
+
+    "Tools": {
+      "type": "object",
+      "description": "Global tool configuration.",
+      "additionalProperties": true,
+      "properties": {
+        "profile": {
+          "type": "string",
+          "enum": ["coding", "general", "minimal"],
+          "description": "Tool profile preset."
+        }
+      }
+    },
+
+    "Broadcast": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["parallel", "sequential", "off"],
+          "default": "parallel"
+        }
+      }
+    },
+
+    "Commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "native": {
+          "type": "string",
+          "enum": ["auto", "on", "off"]
+        },
+        "nativeSkills": {
+          "type": "string",
+          "enum": ["auto", "on", "off"]
+        },
+        "restart": { "type": "boolean" },
+        "ownerDisplay": {
+          "type": "string",
+          "enum": ["raw", "friendly", "hidden"]
+        }
+      }
+    },
+
+    "Session": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dmScope": {
+          "type": "string",
+          "enum": ["per-channel-peer", "global", "per-agent"],
+          "description": "How DM sessions are scoped."
+        }
+      }
+    },
+
+    "Hooks": {
+      "type": "object",
+      "description": "Lifecycle hooks configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "internal": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean", "default": true },
+            "entries": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/HookEntry"
+              }
+            }
+          }
+        }
+      }
+    },
+    "HookEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean", "default": true }
+      }
+    },
+
+    "Channels": {
+      "type": "object",
+      "description": "Communication channel configurations (WhatsApp, iMessage, Telegram, Discord, etc.).",
+      "additionalProperties": {
+        "$ref": "#/$defs/ChannelConfig"
+      }
+    },
+    "ChannelConfig": {
+      "type": "object",
+      "description": "Configuration for a single communication channel.",
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "dmPolicy": {
+          "type": "string",
+          "enum": ["open", "allowlist", "pairing", "off"]
+        },
+        "groupPolicy": {
+          "type": "string",
+          "enum": ["open", "allowlist", "off"]
+        },
+        "selfChatMode": { "type": "boolean", "default": false },
+        "allowFrom": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Allowlisted identifiers (phone numbers, user IDs, etc.)."
+        },
+        "debounceMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mediaMaxMb": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cliPath": {
+          "type": "string",
+          "description": "Path to channel CLI binary if applicable."
+        }
+      },
+      "additionalProperties": true
+    },
+
+    "Gateway": {
+      "type": "object",
+      "description": "Gateway daemon configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["local", "remote", "hybrid"]
+        },
+        "bind": {
+          "type": "string",
+          "enum": ["loopback", "all"],
+          "default": "loopback"
+        },
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["token", "none"]
+            },
+            "token": {
+              "type": "string",
+              "description": "Gateway auth token. Treat as secret."
+            }
+          }
+        },
+        "tailscale": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["off", "funnel", "serve"]
+            },
+            "resetOnExit": { "type": "boolean", "default": false }
+          }
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "denyCommands": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Commands denied for remote nodes."
+            }
+          }
+        }
+      }
+    },
+
+    "Skills": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "install": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "nodeManager": {
+              "type": "string",
+              "enum": ["npm", "pnpm", "yarn", "bun"],
+              "default": "npm"
+            }
+          }
+        }
+      }
+    },
+
+    "Plugins": {
+      "type": "object",
+      "description": "Plugin registry.",
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/PluginEntry"
+          }
+        }
+      }
+    },
+    "PluginEntry": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true },
+        "config": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Plugin-specific configuration."
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

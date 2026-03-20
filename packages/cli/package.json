@@ -1,0 +1,71 @@
+{
+  "name": "onxza",
+  "version": "0.1.0",
+  "description": "ONXZA CLI \u2014 AI Company Operating System. Run agent fleets, manage tickets, enforce quality, and orchestrate AI companies from the terminal.",
+  "license": "SEE LICENSE IN ../../LICENSE.md",
+  "author": {
+    "name": "DevGru Technology Products",
+    "email": "hello@onxza.com",
+    "url": "https://onxza.com"
+  },
+  "homepage": "https://onxza.com",
+  "bugs": {
+    "url": "https://github.com/devgru-technology-products/onxza/issues",
+    "email": "hello@onxza.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devgru-technology-products/onxza.git",
+    "directory": "packages/cli"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "bin": {
+    "onxza": "bin/onxza.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "bin/",
+    "dist/",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/",
+    "prepublishOnly": "npm run build && npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "@onxza/core": "file:../core",
+    "commander": "^12.0.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsup": "^8.3.0",
+    "vitest": "^2.1.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0"
+  },
+  "keywords": [
+    "onxza",
+    "faails",
+    "ai",
+    "agent",
+    "cli",
+    "devgru",
+    "llm",
+    "autonomous"
+  ]
+}

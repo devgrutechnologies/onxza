@@ -1,0 +1,79 @@
+{
+  "from": "0.0.0",
+  "to": "1.0.0",
+  "description": "Initial migration — upgrades pre-schema openclaw.json to v1.0.0. Adds $schemaVersion, companies registry, and dispatcher config.",
+  "operations": [
+    {
+      "op": "add",
+      "path": "/$schemaVersion",
+      "value": "1.0.0"
+    },
+    {
+      "op": "add",
+      "path": "/companies",
+      "value": {
+        "list": [
+          {
+            "slug": "MG",
+            "name": "Marcus Gear Inc.",
+            "parent": null,
+            "sharedLearningsPath": "shared-learnings/global",
+            "created": "2026-03-17T00:00:00Z"
+          },
+          {
+            "slug": "WDC",
+            "name": "World Destination Club",
+            "parent": "MG",
+            "visionPath": "projects/wdc/vision.md",
+            "sharedLearningsPath": "shared-learnings/WDC",
+            "created": "2026-03-17T00:00:00Z"
+          },
+          {
+            "slug": "MGA",
+            "name": "Marcus Gear Agency",
+            "parent": "MG",
+            "visionPath": "projects/mga/vision.md",
+            "sharedLearningsPath": "shared-learnings/MGA",
+            "created": "2026-03-17T00:00:00Z"
+          },
+          {
+            "slug": "DTP",
+            "name": "DevGru Technology Products",
+            "parent": "MG",
+            "visionPath": "projects/onxza/vision.md",
+            "sharedLearningsPath": "shared-learnings/DTP",
+            "created": "2026-03-17T00:00:00Z"
+          },
+          {
+            "slug": "MGP",
+            "name": "Marcus Gear Publishing",
+            "parent": "MG",
+            "visionPath": "projects/mgp/vision.md",
+            "sharedLearningsPath": "shared-learnings/MGP",
+            "created": "2026-03-18T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "op": "add",
+      "path": "/dispatcher",
+      "value": {
+        "enabled": true,
+        "scanIntervalMinutes": 5,
+        "ticketBasePath": "tickets",
+        "routing": {
+          "strategy": "registry"
+        },
+        "pollingCadence": {
+          "principal": 0,
+          "orchestrator": 15,
+          "departmentLead": 30,
+          "specialist": 60,
+          "quality": 60
+        }
+      }
+    }
+  ],
+  "notes": "Company list is inferred from the existing agent naming conventions and AGENT-REGISTRY.md. Dispatcher config uses defaults from ARCHITECTURE.md Section 6.5."
+}

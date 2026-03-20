@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    ONXZA — AI Company Operating System
+    Built to do. Always doing.
+
+    Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
+    Powered by DevGru US Inc. DBA DevGru Technology Products.
+    Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ONXZA — An open-source AI company operating system. Not a chatbot. Not a copilot. An autonomous operating system that executes, verifies, learns, and never stops." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ONXZA — Built to do. Always doing." />
+  <meta property="og:description" content="An open-source AI company operating system built on the FAAILS protocol." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://onxza.com" />
+
+  <title>ONXZA — Built to do. Always doing.</title>
+
+  <style>
+    /* ─── Reset ─────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    /* ─── Design tokens ─────────────────────────────────────────────────── */
+    :root {
+      --bg:         #0a0a0a;
+      --bg-card:    #111111;
+      --border:     #1e1e1e;
+      --text:       #e8e8e8;
+      --muted:      #666666;
+      --accent:     #ffffff;
+      --accent-dim: #999999;
+      --code-bg:    #161616;
+      --green:      #4ade80;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', Consolas, monospace;
+
+      --max-w: 760px;
+      --gap:   2rem;
+    }
+
+    /* ─── Base ──────────────────────────────────────────────────────────── */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── Layout ────────────────────────────────────────────────────────── */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 4rem 0; }
+
+    /* ─── Nav ───────────────────────────────────────────────────────────── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 1.2rem 0;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.875rem;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ─── Hero ──────────────────────────────────────────────────────────── */
+    #hero {
+      padding: 6rem 0 5rem;
+      text-align: left;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .tagline {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover { opacity: 0.88; text-decoration: none; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent-dim); text-decoration: none; }
+
+    /* ─── Install block ─────────────────────────────────────────────────── */
+    .install-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--text);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .install-block .prompt {
+      color: var(--muted);
+      user-select: none;
+    }
+
+    .install-block code { color: var(--text); }
+
+    .install-block .line { display: block; margin-bottom: 0.35rem; }
+    .install-block .line:last-child { margin-bottom: 0; }
+
+    /* ─── Section headers ───────────────────────────────────────────────── */
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ─── What ONXZA is ─────────────────────────────────────────────────── */
+    .not-list {
+      list-style: none;
+      margin: 1.2rem 0;
+    }
+
+    .not-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .not-list .x { color: var(--muted); font-size: 0.8rem; }
+    .not-list .check { color: var(--green); font-size: 0.8rem; }
+
+    /* ─── Stack diagram ─────────────────────────────────────────────────── */
+    .stack {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 2;
+      color: var(--muted);
+    }
+
+    .stack .highlight { color: var(--accent); font-weight: 600; }
+    .stack .arrow { color: var(--border); }
+
+    /* ─── Feature grid ──────────────────────────────────────────────────── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem 1.3rem;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: #333; }
+
+    .feature-card h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-card p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ─── CLI reference ─────────────────────────────────────────────────── */
+    .cli-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .cli-row {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cli-row:last-child { border-bottom: none; }
+
+    .cli-cmd { color: var(--text); min-width: 260px; flex-shrink: 0; }
+    .cli-desc { color: var(--muted); }
+
+    /* ─── FAAILS section ────────────────────────────────────────────────── */
+    .faails-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem 2.5rem;
+    }
+
+    .faails-banner p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 0.6rem;
+      max-width: 520px;
+    }
+
+    .faails-banner a.btn { margin-top: 1.4rem; }
+
+    /* ─── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-credit {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-size: 0.82rem;
+    }
+
+    .footer-links a { color: var(--muted); }
+    .footer-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ─── Divider ───────────────────────────────────────────────────────── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .cli-row { flex-direction: column; gap: 0.2rem; }
+      .cli-desc { display: none; }
+      .nav-links { gap: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── Navigation ───────────────────────────────────────────────────── -->
+  <nav>
+    <div class="container">
+      <span class="nav-logo">ONXZA</span>
+      <ul class="nav-links">
+        <li><a href="#what">What it is</a></li>
+        <li><a href="https://github.com/devgru-technology-products/onxza" rel="noopener">GitHub</a></li>
+        <li><a href="./faails/README.md">Docs</a></li>
+        <li><a href="https://faails.com" rel="noopener">FAAILS ↗</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <p class="eyebrow">Open Source · AI Operating System</p>
+      <h1>Built to do.<br>Always doing.</h1>
+      <p class="tagline">
+        An open-source AI company operating system that executes, verifies,
+        learns, and never stops.
+      </p>
+
+      <div class="install-block">
+        <span class="line"><span class="prompt">$</span> <code>npm install -g onxza</code></span>
+        <span class="line"><span class="prompt">$</span> <code>onxza init</code></span>
+        <span class="line"><span class="prompt">$</span> <code>onxza start</code></span>
+      </div>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://github.com/devgru-technology-products/onxza" rel="noopener">
+          View on GitHub
+        </a>
+        <a class="btn btn-secondary" href="./faails/README.md">
+          Read the docs
+        </a>
+        <a class="btn btn-secondary" href="https://faails.com" rel="noopener">
+          FAAILS protocol ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ─── What it is ───────────────────────────────────────────────────── -->
+  <section id="what">
+    <div class="container">
+      <h2>Not a chatbot. Not a copilot.</h2>
+      <p class="section-sub">An autonomous operating system for AI-powered companies.</p>
+
+      <ul class="not-list">
+        <li><span class="x">✕</span> Not a chat interface that waits for prompts</li>
+        <li><span class="x">✕</span> Not a wrapper around a single model</li>
+        <li><span class="x">✕</span> Not another copilot sitting next to a human</li>
+        <li><span class="check">✓</span> An agent fleet that runs your company</li>
+        <li><span class="check">✓</span> Executes, verifies, learns, and routes autonomously</li>
+        <li><span class="check">✓</span> Built on an open standard (FAAILS) that anyone can implement</li>
+      </ul>
+
+      <div class="stack">
+        <div>LLMs (Claude · GPT · Grok · Ollama · ONXZA-LLM)</div>
+        <div class="arrow">  ↓</div>
+        <div>OpenClaw (agent runtime)</div>
+        <div class="arrow">  ↓</div>
+        <div class="highlight">ONXZA (AI company operating system) ← you are here</div>
+        <div class="arrow">  ↓</div>
+        <div>Your company (runs on ONXZA)</div>
+        <div class="arrow">  ↓</div>
+        <div>FAAILS (the open standard underneath it all)</div>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ─── Features ─────────────────────────────────────────────────────── -->
+  <section id="features">
+    <div class="container">
+      <h2>What's inside</h2>
+      <p class="section-sub">Every component serves a purpose. Nothing decorative.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Agent Governance</h3>
+          <p>Structured identity, reporting chains, and scope boundaries for every agent.</p>
+        </div>
+        <div class="feature-card">
+          <h3>CDP — Collaborative Definition</h3>
+          <p>Bridges the gap between what you mean and what you can say. Vision becomes immutable once approved.</p>
+        </div>
+        <div class="feature-card">
+          <h3>MoE Precision Execution</h3>
+          <p>Every task routes to the expert model built for it. The cheapest capable model always wins.</p>
+        </div>
+        <div class="feature-card">
+          <h3>FVP — Verification Protocol</h3>
+          <p>Every output verified before accepted. No infinite loops. Escalation when confidence is low.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Self-Correcting Routing</h3>
+          <p>Data decides optimal model routing over time. Gets smarter every week.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Model Performance Index</h3>
+          <p>The first real-world benchmark of AI in autonomous workflows. Not synthetic — live data.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Shared Learnings</h3>
+          <p>Knowledge flows up: specialist → company → global → community. Nothing learned twice.</p>
+        </div>
+        <div class="feature-card">
+          <h3>ONXZA-LLM</h3>
+          <p>Custom local model trained on the ecosystem's collective intelligence. Runs offline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ─── CLI ──────────────────────────────────────────────────────────── -->
+  <section id="cli">
+    <div class="container">
+      <h2>CLI reference</h2>
+      <p class="section-sub">One tool to run everything.</p>
+
+      <div class="cli-block">
+        <div class="cli-row">
+          <span class="cli-cmd">onxza init</span>
+          <span class="cli-desc">Initialize ONXZA in the current directory</span>
+        </div>
+        <div class="cli-row">
+          <span class="cli-cmd">onxza start</span>
+          <span class="cli-desc">Start the runtime daemon</span>
+        </div>
+        <div class="cli-row">
+          <span class="cli-cmd">onxza company add [name]</span>
+          <span class="cli-desc">Add a new company to the operating system</span>
+        </div>
+        <div class="cli-row">
+          <span class="cli-cmd">onxza agent create [Name]</span>
+          <span class="cli-desc">Create an agent (format: Company_Dept_Role)</span>
+        </div>
+        <div class="cli-row">
+          <span class="cli-cmd">onxza skill install [name]</span>
+          <span class="cli-desc">Install a skill from the marketplace</span>
+        </div>
+        <div class="cli-row">
+          <span class="cli-cmd">onxza script create [name]</span>
+          <span class="cli-desc">Create a new automation script</span>
+        </div>
+        <div class="cli-row">
+          <span class="cli-cmd">onxza pull onxza-llm</span>
+          <span class="cli-desc">Download the ONXZA local model</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ─── FAAILS ───────────────────────────────────────────────────────── -->
+  <section id="faails">
+    <div class="container">
+      <div class="faails-banner">
+        <p class="eyebrow">Open Protocol</p>
+        <h2>FAAILS</h2>
+        <p>
+          <em>Frameworks for Autonomous Artificial Intelligence Learning Systems.</em>
+          The open protocol specification underneath ONXZA. ONXZA is the reference implementation.
+          Anyone can build a product implementing FAAILS.
+        </p>
+        <a class="btn btn-secondary" href="https://faails.com" rel="noopener">
+          faails.com ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-credit">
+          <strong>Imagined by</strong> Aaron Gear<br />
+          <strong>Created by</strong> Aaron Gear and Marcus Gear (AI Co-Creator)<br />
+          <strong>Powered by</strong> DevGru US Inc. DBA DevGru Technology Products<br />
+          <strong>Using</strong> Powerful Anthropic Models, OpenAI Models, and Local LLMs
+        </div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/devgru-technology-products/onxza" rel="noopener">GitHub</a></li>
+          <li><a href="./faails/README.md">Docs</a></li>
+          <li><a href="https://faails.com" rel="noopener">FAAILS</a></li>
+          <li><a href="./LICENSE.md">License</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

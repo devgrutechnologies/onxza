@@ -1,0 +1,71 @@
+{
+  "_comment": "ONXZA-LLM Training Data Pipeline Configuration",
+  "version": "1.0.0",
+  "pipeline": {
+    "run_every_n_tasks": 100,
+    "min_dataset_size_for_training": 1000,
+    "stretch_dataset_target": 2500
+  },
+  "sources": {
+    "routing": {
+      "enabled": true,
+      "path": "shared-learnings/DTP/onxza/model-performance-index.md",
+      "target_records": 400
+    },
+    "fvp": {
+      "enabled": true,
+      "path": "shared-learnings/DTP/onxza/",
+      "target_records": 400
+    },
+    "shared_learning": {
+      "enabled": true,
+      "paths": [
+        "shared-learnings/global/patterns/",
+        "shared-learnings/DTP/",
+        "shared-learnings/DTP/onxza/"
+      ],
+      "target_records": 200
+    }
+  },
+  "quality_filters": {
+    "min_confidence_score": 10,
+    "max_loop_count_for_inclusion": 3,
+    "min_reasoning_length": 50,
+    "reject_unresolved_escalations": true,
+    "reject_failed_tasks": true
+  },
+  "quality_tiers": {
+    "tier_1": {
+      "fvp_result": "pass",
+      "max_loop_count": 1,
+      "min_confidence": 80,
+      "target_percentage": 60
+    },
+    "tier_2": {
+      "fvp_result": "pass",
+      "max_loop_count": 2,
+      "target_percentage": 30
+    },
+    "tier_3": {
+      "fvp_result": "pass",
+      "max_loop_count": 3,
+      "target_percentage": 10
+    }
+  },
+  "anonymization": {
+    "sensitive_terms_file": "schema/sensitive-terms.json",
+    "quarantine_on_scan_failure": true,
+    "require_manual_review_for_api_key_candidates": true
+  },
+  "output": {
+    "training_data_file": "output/training-data.jsonl",
+    "manifest_file": "output/manifest.json",
+    "rejected_file": "output/rejected/rejected-records.jsonl",
+    "quarantine_dir": "output/quarantine/",
+    "run_log": "output/pipeline-runs.log"
+  },
+  "schema": {
+    "version": "1.0",
+    "file": "schema/training-record.schema.json"
+  }
+}

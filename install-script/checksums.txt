@@ -1,0 +1,16 @@
+# ONXZA CLI — Package Checksums
+# SHA256 checksums for released versions.
+# Format: <sha256>  onxza-<version>.tgz
+#
+# Verify manually:
+#   curl -fsSL https://get.onxza.com/checksums.txt | grep "0.1.0"
+#
+# Updated automatically by generate-checksums.sh after each npm publish.
+# Source of truth: https://get.onxza.com/checksums.txt
+#
+# Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
+# Powered by DevGru US Inc. DBA DevGru Technology Products.
+
+# <checksums will be added here after npm publish>
+# Example line (placeholder — real hash populated by generate-checksums.sh):
+# abc123def456...  onxza-0.1.0.tgz

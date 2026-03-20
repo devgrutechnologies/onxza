@@ -1,0 +1,32 @@
+# ONXZA CLI — .npmignore
+# Files excluded from the npm package.
+# Only bin/, src/, LICENSE.md, README.md, CHANGELOG.md are published (see package.json "files").
+
+# Development
+node_modules/
+.git/
+.gitignore
+.github/
+
+# Tests and CI
+*.test.js
+*.spec.js
+__tests__/
+coverage/
+.nyc_output/
+
+# Docs (available online at https://docs.onxza.com)
+docs/
+
+# Misc
+*.log
+.DS_Store
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Internal
+TODO.md
+NOTES.md
