@@ -1,0 +1,38 @@
+# Architecture Overview
+
+> ONXZA platform architecture — system design, data model, and component interactions.
+
+## System Components
+
+ONXZA is composed of several core subsystems:
+
+1. **CLI** — Command-line interface for workspace management
+2. **Core** — Shared libraries, schemas, and validation
+3. **Dispatcher** — Agent routing and task distribution
+4. **Marketplace** — Skill and agent template registry
+5. **Mission Control** — Web dashboard for monitoring and management
+
+## Data Model
+
+ONXZA uses a file-first data model:
+
+- **openclaw.json** — Workspace configuration (JSON Schema v1.0.0)
+- **Agent Files** — AGENTS.md, SOUL.md, IDENTITY.md, TOOLS.md, MEMORY.md
+- **Tickets** — Markdown files in tickets/open/, tickets/pending/, tickets/closed/
+- **Shared Learnings** — Scoped knowledge files in shared-learnings/
+
+## Tech Stack
+
+- TypeScript + Node.js
+- Commander.js (CLI)
+- Ajv (JSON Schema validation)
+- Mustache (templating)
+- Next.js (web surfaces)
+
+## Detailed Architecture
+
+For the full architecture specification, see [ARCHITECTURE-v0.1.md](https://github.com/devgru-us/onxza/blob/main/docs/ARCHITECTURE-v0.1.md).
+
+---
+
+*Content will be expanded from ARCHITECTURE-v0.1.md as the docs site matures.*

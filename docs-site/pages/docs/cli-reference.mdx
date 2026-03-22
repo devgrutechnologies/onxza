@@ -1,0 +1,346 @@
+# CLI Reference
+
+> Complete command reference for the ONXZA CLI v0.1.0.
+
+## Global Options
+
+| Flag | Description |
+|---|---|
+| `-v, --version` | Print ONXZA CLI version |
+| `--json` | Output in JSON format (machine-readable) |
+| `-h, --help` | Show help for a command |
+
+---
+
+## `onxza init`
+
+Initialize a new ONXZA installation — creates workspace directories, `openclaw.json`, governance script stubs, a pre-commit TORI hook, and a safety checkpoint.
+
+```bash
+onxza init [--dir <path>] [--company <name>] [--no-git] [--json]
+```
+
+Idempotent — safe to re-run on an existing installation.
+
+---
+
+## `onxza status`
+
+Show ONXZA system status: registered agents, ticket counts, health score.
+
+```bash
+onxza status [--agent <id>] [--company <name>] [--no-color]
+```
+
+| Option | Description |
+|---|---|
+| `--agent <id>` | Show details for a specific agent |
+| `--company <name>` | Filter agent view by company |
+| `--no-color` | Disable color output |
+
+---
+
+## `onxza dashboard`
+
+Launch ONXZA Mission Control TUI — live auto-refreshing agent and ticket overview.
+
+```bash
+onxza dashboard [--refresh <seconds>]
+```
+
+---
+
+## `onxza agent`
+
+Manage ONXZA agents.
+
+| Command | Description |
+|---|---|
+| `onxza agent create <Company_Dept_Role>` | Scaffold a new agent workspace (validates naming, writes 6 files, TORI-QMD gate, registers, checkpoints) |
+| `onxza agent list` | List all registered agents with current status |
+| `onxza agent validate <agent-id>` | Run TORI-QMD validation on all 6 files in an agent workspace |
+| `onxza agent retire <agent-id>` | Retire an agent — archive learnings, remove from registry, preserve workspace for audit |
+| `onxza agent convert <agent-id>` | Convert a temporary agent to a persistent daemon |
+| `onxza agent training [agent-id]` | Show training mode status — first 10 tasks tracked, quality metrics per agent |
+| `onxza agent checklist <agent-id>` | Print pre-retirement checklist for an agent (dry-run, no changes made) |
+
+**Examples:**
+```bash
+onxza agent create DTP_ONXZA_Architect
+onxza agent list --company DTP
+onxza agent validate dtp-onxza-architect
+onxza agent retire dtp-onxza-cli
+onxza agent training dtp-onxza-cli
+```
+
+---
+
+## `onxza company`
+
+Manage companies in this ONXZA installation.
+
+| Command | Description |
+|---|---|
+| `onxza company add <name>` | Register a new company |
+| `onxza company list` | List all companies registered in this installation |
+| `onxza company switch <name>` | Set the active company context (persisted between CLI sessions) |
+
+**Examples:**
+```bash
+onxza company add DevGru
+onxza company list
+onxza company switch DTP
+```
+
+---
+
+## `onxza tickets`
+
+List and manage ONXZA tickets.
+
+```bash
+onxza tickets [--status <status>] [--all] [--company <name>] [--assigned-to <agent-id>] [--priority <level>] [--project <slug>] [--type <type>]
+```
+
+| Subcommand | Description |
+|---|---|
+| `onxza tickets show <ticket-id>` | Display full ticket detail |
+| `onxza tickets create` | Scaffold a new ticket with correct frontmatter and naming convention |
+| `onxza tickets move <ticket-id> <status>` | Move a ticket to a new status directory (updates frontmatter) |
+
+**Filters:**
+```bash
+onxza tickets --status open
+onxza tickets --company DTP --priority high
+onxza tickets --assigned-to dtp-onxza-cli
+onxza tickets --all
+```
+
+**Create options:**
+```bash
+onxza tickets create \
+  --summary "Build CLI release pipeline" \
+  --type task \
+  --assigned-to dtp-onxza-cli \
+  --priority high \
+  --company DTP \
+  --project onxza
+```
+
+---
+
+## `onxza skill`
+
+Manage ONXZA skills (install, list, update, publish).
+
+| Command | Description |
+|---|---|
+| `onxza skill install <skill-name>` | Install a skill from the ONXZA skills marketplace |
+| `onxza skill list` | List installed skills and browse the marketplace |
+| `onxza skill update [skill-name]` | Update a skill to the latest version (omit name to update all) |
+| `onxza skill publish <path>` | Submit a skill to the ONXZA skills marketplace |
+| `onxza skill login` | Authenticate with the ONXZA skills marketplace |
+
+**Examples:**
+```bash
+onxza skill install web-scraper --agent dtp-onxza-cli --scope global
+onxza skill list --scope company --company DTP
+onxza skill update
+onxza skill publish ./my-skill/ --name my-skill --version 1.0.0
+```
+
+---
+
+## `onxza learnings`
+
+Shared Learnings promotion pipeline — push, review, and promote knowledge across tiers.
+
+| Command | Description |
+|---|---|
+| `onxza learnings new <slug>` | Scaffold a new learning file from template |
+| `onxza learnings push <file>` | Submit a learning file to a company-tier shared-learnings directory |
+| `onxza learnings review` | Show pending `skill_approval_request` tickets (PM review queue) |
+| `onxza learnings promote <file>` | Promote a company-tier learning to global (or cross-company) |
+| `onxza learnings list` | List all shared learning files with metadata |
+| `onxza learnings validate <file>` | Run TORI-QMD validation on a learning file before pushing |
+
+**Examples:**
+```bash
+onxza learnings new my-pattern --company DTP --type pattern
+onxza learnings push ./my-pattern.md --company DTP --type pattern --agent dtp-onxza-cli
+onxza learnings review --company DTP
+onxza learnings promote shared-learnings/DTP/patterns/my-pattern.md --to global --agent dtp-pm
+onxza learnings list --company DTP
+onxza learnings list --tier global --type skill
+onxza learnings validate ./my-learning.md
+```
+
+**Learning types:** `pattern` | `correction` | `tool_note` | `escalation_log` | `model_observation` | `workflow` | `skill`
+
+---
+
+## `onxza checkpoint`
+
+Manage ONXZA safety checkpoints — create snapshots before irreversible actions.
+
+| Command | Description |
+|---|---|
+| `onxza checkpoint create <slug>` | Create a checkpoint snapshot before an irreversible action |
+| `onxza checkpoint list` | List all checkpoints with timestamp and event slug |
+| `onxza checkpoint verify <checkpoint-id>` | Verify vision document hashes against a stored checkpoint |
+| `onxza checkpoint restore <checkpoint-id>` | Print step-by-step restore instructions for a checkpoint |
+| `onxza checkpoint diff <id1> <id2>` | Show agent additions/removals between two checkpoints |
+
+**Examples:**
+```bash
+onxza checkpoint create before-delete-agents
+onxza checkpoint list
+onxza checkpoint verify 20260318-191213-dtp-021-checkpoint-system-build
+onxza checkpoint restore 20260318-191213-dtp-021-checkpoint-system-build
+onxza checkpoint diff 20260317-180323-onxza-foundation-complete 20260318-144057-onxza-full-build-2026-03-18
+```
+
+---
+
+## `onxza validate`
+
+Run TORI-QMD validation on `.md` files before commit or delivery.
+
+```bash
+onxza validate [path]
+onxza validate --all [workspace]
+onxza validate --agent <dir>
+```
+
+**Examples:**
+```bash
+onxza validate AGENTS.md
+onxza validate --all
+onxza validate --all ~/.openclaw/workspace
+onxza validate --agent ~/.openclaw/workspace-dtp-onxza-cli
+```
+
+---
+
+## `onxza audit`
+
+Manage the ONXZA append-only audit trail.
+
+| Command | Description |
+|---|---|
+| `onxza audit log` | Append an irreversible action entry to the audit trail |
+| `onxza audit list` | List audit trail entries with optional filters |
+| `onxza audit verify` | Verify SHA256 checksums on all audit trail entries |
+
+**Examples:**
+```bash
+onxza audit log --agent wdc-coo --action "Deleted 200 stale pages" --outcome ok --reversible no
+onxza audit list
+onxza audit list --agent wdc-coo --date 2026-03-18
+onxza audit verify
+```
+
+---
+
+## `onxza security`
+
+ONXZA security tools — secret scanning, action classification, checkpoints.
+
+| Command | Description |
+|---|---|
+| `onxza security scan [path]` | Scan files for secrets, credentials, API keys, and tokens |
+| `onxza security classify <action>` | Classify an action as REVERSIBLE or IRREVERSIBLE |
+| `onxza security checkpoints` | List existing checkpoints |
+
+**Examples:**
+```bash
+onxza security scan .
+onxza security scan /path/to/project --exclude test,fixtures
+onxza security classify "delete all stale pages"
+onxza security checkpoints
+```
+
+---
+
+## `onxza script`
+
+Manage ONXZA automation scripts (create, list, run).
+
+| Command | Description |
+|---|---|
+| `onxza script create <name>` | Scaffold a new automation script with tier classification |
+| `onxza script list` | List automation scripts with tier classification and run history |
+| `onxza script run <script-name>` | Execute a script in a sandboxed environment |
+
+---
+
+## `onxza session`
+
+Session lifecycle management — start protocol, end logging, memory consolidation.
+
+```bash
+onxza session start --agent <id> --ticket <ticket-id>
+onxza session end --agent <id> --ticket <ticket-id> --what "..." --learned "..."
+```
+
+---
+
+## `onxza memory`
+
+Memory Isolation enforcement — access control, classification, audit.
+
+| Command | Description |
+|---|---|
+| `onxza memory scan` | Scan all agent memory files for cross-company exposure risks |
+| `onxza memory audit --agent <id>` | Audit a specific agent's memory access |
+| `onxza memory grant` | Grant cross-company memory access |
+| `onxza memory grants` | List all active memory grants |
+
+---
+
+## `onxza dispatcher`
+
+ONXZA central dispatcher — ticket scanning and agent notification.
+
+| Command | Description |
+|---|---|
+| `onxza dispatcher run` | Scan open tickets and dispatch to assigned agents |
+| `onxza dispatcher dry-run` | Preview dispatch targets without sending notifications |
+| `onxza dispatcher logs` | Show recent dispatcher log output |
+
+---
+
+## `onxza logs`
+
+Tail ONXZA system logs.
+
+```bash
+onxza logs [--agent <id>] [--follow] [--lines <n>]
+```
+
+---
+
+## `onxza pull`
+
+Download and install an ONXZA model locally via Ollama.
+
+```bash
+onxza pull [model]
+onxza pull --list
+```
+
+**Variants:** `mini` (3.8B) | `standard` (7B) | `pro` (7B high-precision)
+
+---
+
+## `onxza start`
+
+Start the ONXZA runtime daemon.
+
+```bash
+onxza start [--foreground]
+```
+
+---
+
+*Generated from CLI v0.1.0 command definitions — 2026-03-20.*

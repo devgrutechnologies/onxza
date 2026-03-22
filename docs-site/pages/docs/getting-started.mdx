@@ -1,0 +1,45 @@
+# Getting Started
+
+> This guide walks you through installing ONXZA and creating your first agent.
+
+## Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- A terminal
+
+## Installation
+
+```bash
+npm install -g onxza
+```
+
+## Initialize a Workspace
+
+```bash
+onxza init my-workspace
+cd my-workspace
+```
+
+This creates a new ONXZA workspace with:
+- `openclaw.json` — Configuration file
+- `agents/` — Agent definitions
+- `companies/` — Company registry
+- `shared-learnings/` — Knowledge base
+- `tickets/` — Inter-agent task system
+
+## Create Your First Agent
+
+```bash
+onxza agent create my-first-agent --company my-company
+```
+
+## Next Steps
+
+- Read the [Architecture Overview](/docs/architecture) to understand the platform
+- Explore the [FAAILS Protocol](/docs/faails) for governance standards
+- Check the [CLI Reference](/docs/cli-reference) for all available commands
+
+---
+
+*Content will be expanded as ONXZA v0.1 development progresses.*

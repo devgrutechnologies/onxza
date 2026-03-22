@@ -98,7 +98,7 @@ export function parseAgentName(name: string): AgentNameValidation {
 
 /**
  * Resolve a model reference to provider/model format.
- * claude-* → anthropic/, gpt-*/o1-*/o3-*/o4-* → openai/, else → ollama/
+ * Resolves shorthand model names: claude prefix -> anthropic, gpt/o1/o3/o4 prefix -> openai, else -> ollama
  */
 export function resolveModel(model: string): string {
   if (model.includes('/')) return model; // already qualified

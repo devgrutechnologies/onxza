@@ -99,7 +99,15 @@ export interface OpenclawConfig {
 export type TicketStatus =
   | 'open' | 'in-progress' | 'pending-approval' | 'blocked' | 'closed';
 
+export const TICKET_STATUSES: readonly TicketStatus[] = [
+  'open', 'in-progress', 'pending-approval', 'blocked', 'closed',
+] as const;
+
 export type TicketPriority = 'low' | 'medium' | 'high' | 'critical';
+
+export const TICKET_PRIORITIES: readonly TicketPriority[] = [
+  'low', 'medium', 'high', 'critical',
+] as const;
 
 export type TicketType =
   | 'task' | 'approval_request' | 'escalation'
@@ -145,6 +153,17 @@ export interface Checkpoint {
 }
 
 // ---------------------------------------------------------------------------
+// Top-level constants
+// ---------------------------------------------------------------------------
+
+export const CREDIT_LINE =
+  'Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). ' +
+  'Powered by DevGru US Inc. DBA DevGru Technology Products.';
+
+export const SCHEMA_VERSION = '1.0.0';
+export const ONXZA_VERSION  = '0.1.0';
+
+// ---------------------------------------------------------------------------
 // Agent workspace types (§6.2)
 // ---------------------------------------------------------------------------
 
@@ -154,6 +173,19 @@ export type AgentFileName =
 export const AGENT_FILES: AgentFileName[] = [
   'AGENTS.md', 'SOUL.md', 'IDENTITY.md', 'MEMORY.md', 'TOOLS.md', 'HEARTBEAT.md',
 ];
+
+/** Alias for the canonical 6-file agent workspace set (used in tests + CLI). */
+export const AGENT_6_FILES: AgentFileName[] = AGENT_FILES;
+
+/** Files that must never be shared with other agents or exposed in APIs. */
+export const ALWAYS_PRIVATE_FILES: ReadonlySet<AgentFileName> = new Set<AgentFileName>([
+  'MEMORY.md', 'SOUL.md', 'IDENTITY.md',
+]);
+
+/** Files that are safe to share across the system. */
+export const ALWAYS_PUBLIC_FILES: ReadonlySet<AgentFileName> = new Set<AgentFileName>([
+  'AGENTS.md', 'TOOLS.md', 'HEARTBEAT.md',
+]);
 
 export interface AgentTemplateVars {
   AGENT_NAME:         string;    // DTP_ONXZA_Architect

@@ -2,12 +2,15 @@
  * API Route: /api/mpi
  * Returns MPI (Model Performance Index) aggregated stats and raw entries.
  *
- * GET /api/mpi                  — aggregated report (all data)
- * GET /api/mpi?model=X          — filter by model name (substring match)
- * GET /api/mpi?task_type=code   — filter by task type
+ * GET /api/mpi                          — aggregated report (all data)
+ * GET /api/mpi?model=X                  — filter by model name (substring match)
+ * GET /api/mpi?task_type=code           — filter by task type
  * GET /api/mpi?date_from=YYYY-MM-DD
- * GET /api/mpi?raw=true         — return raw entries instead of report
- * GET /api/mpi?limit=N          — max entries (raw mode)
+ * GET /api/mpi?date_to=YYYY-MM-DD
+ * GET /api/mpi?raw=true                 — return raw entries instead of report
+ * GET /api/mpi?limit=N                  — max entries (raw mode)
+ * GET /api/mpi?compare=model1,model2    — side-by-side comparison of two models
+ * GET /api/mpi?trends=true              — time-bucketed FVP pass rate trends by model
  *
  * Reads workspace/logs/mpi/mpi-log.jsonl directly. No DB, no LLM.
  *
@@ -18,6 +21,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
+
+export const dynamic = 'force-dynamic';
 
 const WORKSPACE = process.env.WORKSPACE_PATH ||
   join(process.env.HOME || '~', '.openclaw', 'workspace');
@@ -65,11 +70,20 @@ function loadEntries(model?: string, taskType?: string, dateFrom?: string, dateT
   return limit ? entries.slice(0, limit) : entries;
 }
 
-function buildReport(entries: MpiEntry[]) {
-  if (entries.length === 0) {
-    return { total: 0, models: 0, model_stats: {}, generated_at: new Date().toISOString() };
-  }
+interface ModelStats {
+  total_calls: number;
+  fvp_pass_rate: number;
+  fvp_fail_rate: number;
+  avg_loops: number;
+  avg_time_ms: number;
+  avg_cost_usd: number;
+  total_cost_usd: number;
+  avg_confidence: number;
+  cost_efficiency: number; // tasks per dollar
+  top_task_types: [string, number][];
+}
 
+function buildModelStats(entries: MpiEntry[]): Record<string, ModelStats> {
   const models: Record<string, {
     calls: number; fvp_pass: number; fvp_fail: number; fvp_loop: number;
     total_loops: number; total_ms: number; total_cost: number;
@@ -95,23 +109,94 @@ function buildReport(entries: MpiEntry[]) {
     s.task_types[e.task_type] = (s.task_types[e.task_type] ?? 0) + 1;
   }
 
-  const model_stats: Record<string, object> = {};
+  const result: Record<string, ModelStats> = {};
   for (const [m, s] of Object.entries(models)) {
     const c = s.calls;
-    model_stats[m] = {
+    const totalCost = Math.round(s.total_cost * 10000) / 10000;
+    result[m] = {
       total_calls:    c,
       fvp_pass_rate:  Math.round((s.fvp_pass / c) * 1000) / 1000,
       fvp_fail_rate:  Math.round((s.fvp_fail / c) * 1000) / 1000,
       avg_loops:      Math.round((s.total_loops / c) * 100) / 100,
       avg_time_ms:    Math.round(s.total_ms / c),
       avg_cost_usd:   Math.round((s.total_cost / c) * 100000) / 100000,
-      total_cost_usd: Math.round(s.total_cost * 10000) / 10000,
+      total_cost_usd: totalCost,
       avg_confidence: Math.round((s.confidence_sum / c) * 10) / 10,
+      cost_efficiency: totalCost > 0 ? Math.round((c / totalCost) * 10) / 10 : 0,
       top_task_types: Object.entries(s.task_types).sort((a, b) => b[1] - a[1]).slice(0, 3),
     };
   }
+  return result;
+}
 
-  return { total: entries.length, models: Object.keys(model_stats).length, model_stats, generated_at: new Date().toISOString() };
+function buildReport(entries: MpiEntry[]) {
+  if (entries.length === 0) {
+    return { total: 0, models: 0, model_stats: {}, task_types: [], generated_at: new Date().toISOString() };
+  }
+
+  const model_stats = buildModelStats(entries);
+
+  // Unique task types
+  const taskTypeCounts: Record<string, number> = {};
+  for (const e of entries) {
+    taskTypeCounts[e.task_type] = (taskTypeCounts[e.task_type] ?? 0) + 1;
+  }
+  const task_types = Object.entries(taskTypeCounts).sort((a, b) => b[1] - a[1]).map(([t, c]) => ({ type: t, count: c }));
+
+  return {
+    total: entries.length,
+    models: Object.keys(model_stats).length,
+    model_stats,
+    task_types,
+    generated_at: new Date().toISOString()
+  };
+}
+
+function buildTrends(entries: MpiEntry[]) {
+  // Bucket by day, track FVP pass rate per model per day
+  const buckets: Record<string, Record<string, { pass: number; total: number }>> = {};
+
+  for (const e of entries) {
+    const day = e.timestamp.slice(0, 10);
+    if (!buckets[day]) buckets[day] = {};
+    const m = e.model_used;
+    if (!buckets[day][m]) buckets[day][m] = { pass: 0, total: 0 };
+    buckets[day][m].total++;
+    if (e.fvp_result === 'pass') buckets[day][m].pass++;
+  }
+
+  const days = Object.keys(buckets).sort();
+  const allModels = [...new Set(entries.map(e => e.model_used))];
+
+  return {
+    days,
+    models: allModels,
+    series: allModels.map(model => ({
+      model,
+      data: days.map(day => {
+        const b = buckets[day]?.[model];
+        if (!b || b.total === 0) return null;
+        return Math.round((b.pass / b.total) * 1000) / 1000;
+      })
+    })),
+    generated_at: new Date().toISOString()
+  };
+}
+
+function buildComparison(entries: MpiEntry[], models: string[]) {
+  const result: Record<string, ModelStats | { error: string }> = {};
+  for (const m of models) {
+    const filtered = entries.filter(e => e.model_used.toLowerCase().includes(m.toLowerCase()));
+    if (filtered.length === 0) {
+      result[m] = { error: 'No data for this model' };
+    } else {
+      const stats = buildModelStats(filtered);
+      // Get the actual model key that matched
+      const key = Object.keys(stats)[0];
+      result[m] = key ? stats[key] : { error: 'No data' };
+    }
+  }
+  return { comparison: result, generated_at: new Date().toISOString() };
 }
 
 export async function GET(request: NextRequest) {
@@ -121,9 +206,27 @@ export async function GET(request: NextRequest) {
   const dateFrom = searchParams.get('date_from') || undefined;
   const dateTo   = searchParams.get('date_to') || undefined;
   const raw      = searchParams.get('raw') === 'true';
+  const trends   = searchParams.get('trends') === 'true';
+  const compare  = searchParams.get('compare') || undefined;
   const limit    = searchParams.get('limit') ? parseInt(searchParams.get('limit')!, 10) : undefined;
 
-  const entries = loadEntries(model, taskType, dateFrom, dateTo, raw ? limit : undefined);
+  // Load all entries (for compare/trends we load unfiltered then filter by model inside)
+  const entries = loadEntries(
+    compare ? undefined : model,
+    taskType,
+    dateFrom,
+    dateTo,
+    raw ? limit : undefined
+  );
+
+  if (compare) {
+    const compareModels = compare.split(',').map(s => s.trim()).filter(Boolean);
+    return NextResponse.json(buildComparison(entries, compareModels));
+  }
+
+  if (trends) {
+    return NextResponse.json(buildTrends(entries));
+  }
 
   if (raw) {
     return NextResponse.json({ entries, total: entries.length, generated_at: new Date().toISOString() });

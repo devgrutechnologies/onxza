@@ -201,7 +201,7 @@ export function migrateConfig(root?: string, dryRun = false): MigrationResult {
     throw new Error('No openclaw.json found. Run onxza init first.');
   }
 
-  const fromVersion = (config as Record<string, unknown>)['$schemaVersion'] as string | undefined ?? '0.0.0';
+  const fromVersion = ((config as unknown as Record<string, unknown>)['$schemaVersion'] as string | undefined) ?? '0.0.0';
 
   if (fromVersion === SCHEMA_VERSION) {
     return { fromVersion, toVersion: SCHEMA_VERSION, changed: false, steps: ['Already at current schema version'] };
@@ -216,8 +216,8 @@ export function migrateConfig(root?: string, dryRun = false): MigrationResult {
     if (!dryRun) {
       const migrated = config as OpenclawConfig;
       migrated.$schemaVersion = SCHEMA_VERSION;
-      if (!migrated.meta) migrated.meta = {};
-      if (!migrated.agents) migrated.agents = { list: [] };
+      if (!migrated.meta) migrated.meta = { lastTouchedVersion: SCHEMA_VERSION, lastTouchedAt: new Date().toISOString() };
+      if (!migrated.agents) migrated.agents = { defaults: { model: { primary: 'anthropic/claude-sonnet-4-6' } }, list: [] };
       if (!Array.isArray(migrated.agents.list)) migrated.agents.list = [];
       if (!migrated.companies) migrated.companies = { list: [] };
       writeConfig(migrated, root);

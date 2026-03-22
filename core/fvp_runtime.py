@@ -62,7 +62,7 @@ class FVPResult:
     accuracy_passed: bool
     notes: str
     escalation_ticket_id: Optional[str] = None
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"))
 
 
 @dataclass
@@ -75,7 +75,7 @@ class LoopRecord:
     accuracy_check: str         # "PASS" | "FAIL" | "PENDING"
     humanization_notes: str
     accuracy_notes: str
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"))
 
 
 # ── Main Runtime ─────────────────────────────────────────────────────────────
