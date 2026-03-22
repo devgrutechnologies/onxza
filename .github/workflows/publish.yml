@@ -1,0 +1,161 @@
+# ─────────────────────────────────────────────────────────────────
+# ONXZA CI/CD — Auto-publish to npm on version tag
+#
+# Trigger: git tag v0.1.0 && git push origin v0.1.0
+# Pipeline: checkout → install → test → publish → GitHub Release
+#
+# Prerequisites:
+#   1. NPM_TOKEN secret set in GitHub repo settings
+#      (Settings → Secrets and variables → Actions → New repository secret)
+#      Command: gh secret set NPM_TOKEN --body "npm_xxxxx"
+#   2. GITHUB_TOKEN is auto-provided by GitHub Actions
+#
+# Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
+# Powered by DevGru US Inc. DBA DevGru Technology Products.
+# Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.
+# ─────────────────────────────────────────────────────────────────
+
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'        # stable: v0.1.0, v1.0.0
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'      # pre-release: v0.1.0-beta.1
+
+permissions:
+  contents: write    # needed for GitHub Release creation
+
+jobs:
+  # ── Gate: Run full test suite before any publish ──────────────
+  test:
+    name: Test Gate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cli
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: cli/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Verify package builds
+        run: npm pack --dry-run
+
+  # ── Publish to npm (only if tests pass) ───────────────────────
+  publish:
+    name: Publish to npm
+    needs: test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cli
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: cli/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify version matches tag
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "Tag version: $TAG_VERSION"
+          echo "Package version: $PKG_VERSION"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "❌ Version mismatch! Tag ($TAG_VERSION) ≠ package.json ($PKG_VERSION)"
+            exit 1
+          fi
+          echo "✅ Versions match: $TAG_VERSION"
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Output npm package URL
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          NPM_URL="https://www.npmjs.com/package/onxza/v/${PKG_VERSION}"
+          echo "## 📦 Published to npm" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Package:** [onxza@${PKG_VERSION}](${NPM_URL})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "npm install -g onxza@${PKG_VERSION}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  # ── Create GitHub Release with CHANGELOG body ─────────────────
+  release:
+    name: GitHub Release
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract CHANGELOG section for this version
+        id: changelog
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "Extracting changelog for v${TAG_VERSION}..."
+
+          # Extract the section between this version header and the next version header
+          # Supports both "## v0.1.0" and "## [0.1.0]" formats
+          CHANGELOG_BODY=$(awk -v ver="$TAG_VERSION" '
+            BEGIN { found=0; printing=0 }
+            /^## / {
+              if (printing) exit
+              if (index($0, ver) > 0) { found=1; printing=1; next }
+            }
+            printing { print }
+          ' CHANGELOG.md 2>/dev/null || echo "Release ${TAG_VERSION}")
+
+          # If no changelog found, use a default message
+          if [ -z "$CHANGELOG_BODY" ]; then
+            CHANGELOG_BODY="Release v${TAG_VERSION}. See CHANGELOG.md for details."
+          fi
+
+          # Write to file to handle multiline safely
+          echo "$CHANGELOG_BODY" > /tmp/release_body.md
+          echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v${{ steps.changelog.outputs.version }}"
+          body_path: /tmp/release_body.md
+          draft: false
+          prerelease: ${{ contains(github.ref, '-') }}
+          files: |
+            CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release summary
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "## 🎉 GitHub Release created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Release:** [v${TAG_VERSION}](https://github.com/${{ github.repository }}/releases/tag/v${TAG_VERSION})" >> $GITHUB_STEP_SUMMARY
