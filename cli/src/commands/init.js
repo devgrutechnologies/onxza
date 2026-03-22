@@ -62,8 +62,11 @@ const WORKSPACE_DIRS = [
 // Starter openclaw.json scaffold
 // ---------------------------------------------------------------------------
 
-function generateOpenclawJson() {
+function generateOpenclawJson(projectName) {
   return {
+    name:       projectName || 'onxza-workspace',
+    version:    '0.1.0',
+    created_at: new Date().toISOString(),
     meta: {
       lastTouchedVersion: '0.1.0',
       lastTouchedAt:      new Date().toISOString(),
@@ -254,6 +257,57 @@ if __name__ == "__main__":
 `;
 
 // ---------------------------------------------------------------------------
+// README.md template
+// ---------------------------------------------------------------------------
+
+function generateReadme(projectName) {
+  return `# ${projectName}
+
+> Powered by [ONXZA](https://onxza.com) — the AI agent operating system.
+
+## Getting Started
+
+\`\`\`bash
+# Create your first agent
+onxza agent create ${projectName}_[Dept]_[Role]
+
+# Register your company
+onxza company add ${projectName}
+
+# View system health
+onxza status
+\`\`\`
+
+## Project Structure
+
+\`\`\`
+${projectName}/
+├── workspace/
+│   ├── docs/           # Governance documents
+│   ├── tickets/        # Ticket system (open, in-progress, closed…)
+│   ├── projects/       # Project directories
+│   ├── memory/         # Session logs
+│   ├── logs/           # Audit trail
+│   ├── scripts/        # Governance scripts
+│   └── shared-learnings/  # Knowledge base
+└── checkpoints/        # System checkpoints
+\`\`\`
+
+## TORI-QMD Validation
+
+All Markdown files are validated against TORI-QMD standards via a pre-commit hook.
+
+\`\`\`bash
+python3 workspace/scripts/validate-tori-qmd.py <file.md>
+\`\`\`
+
+---
+
+*Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.*
+`;
+}
+
+// ---------------------------------------------------------------------------
 // Pre-commit hook script
 // ---------------------------------------------------------------------------
 
@@ -377,14 +431,15 @@ function writeIfMissing(filePath, content) {
 /**
  * Run the full init flow.
  * @param {object} opts
- * @param {string} opts.baseDir    - Target base directory
+ * @param {string} opts.baseDir     - Target base directory
+ * @param {string} opts.projectName - Optional project name
  * @param {boolean} opts.dryRun
- * @param {boolean} opts.force     - Force re-init even if exists
- * @param {function} opts.log      - Progress logger (msg, status?)
+ * @param {boolean} opts.force      - Force re-init even if exists
+ * @param {function} opts.log       - Progress logger (msg, status?)
  * @returns {object} result
  */
 function runInit(opts) {
-  const { baseDir, dryRun, force, log } = opts;
+  const { baseDir, dryRun, force, log, projectName } = opts;
   const steps  = [];
   const errors = [];
 
@@ -428,11 +483,24 @@ function runInit(opts) {
   log('Writing openclaw.json scaffold...');
   const ocJsonPath = path.join(baseDir, 'openclaw.json');
   if (!dryRun) {
-    const status = writeIfMissing(ocJsonPath, JSON.stringify(generateOpenclawJson(), null, 2) + '\n');
+    const status = writeIfMissing(ocJsonPath, JSON.stringify(generateOpenclawJson(projectName), null, 2) + '\n');
     log(`  ${status === 'created' ? '✓ created' : '— already exists (skipped)'}: openclaw.json`);
     steps.push({ step: 'openclaw.json', path: ocJsonPath, status });
   } else {
     log(`  [dry-run] would write: ${ocJsonPath}`);
+  }
+  log('');
+
+  // ── Step 3b: Write README.md ──────────────────────────────────────────────
+  log('Writing README.md...');
+  const readmePath = path.join(baseDir, 'README.md');
+  if (!dryRun) {
+    const pname = projectName || path.basename(baseDir);
+    const readmeStatus = writeIfMissing(readmePath, generateReadme(pname));
+    log(`  ${readmeStatus === 'created' ? '✓ created' : '— already exists (skipped)'}: README.md`);
+    steps.push({ step: 'README.md', path: readmePath, status: readmeStatus });
+  } else {
+    log(`  [dry-run] would write: ${readmePath}`);
   }
   log('');
 
@@ -547,14 +615,21 @@ function runInit(opts) {
 // ---------------------------------------------------------------------------
 
 const initCmd = new Command('init')
-  .description('Initialize a new ONXZA installation (workspace, openclaw.json, scripts, git hook, checkpoint)')
-  .option('--dir <path>', 'Base directory for ONXZA installation (default: ~/.openclaw)')
+  .description('Initialize a new ONXZA project (workspace, openclaw.json, README, scripts, git hook, checkpoint)')
+  .argument('[project-name]', 'Name of the project to create (creates ./<project-name>/ directory)')
+  .option('--dir <path>', 'Base directory for ONXZA installation (overrides project-name; default: ~/.openclaw)')
   .option('--force', 'Overwrite existing files (default: idempotent — skip existing)')
   .option('--dry-run', 'Show what would be created without making any changes')
   .option('--no-git', 'Skip git initialization')
-  .action((options, cmd) => {
+  .action((projectName, options, cmd) => {
     const jsonMode = isJsonMode(cmd);
-    const baseDir  = resolveBaseDir(options.dir);
+    // If project-name given, create ./<project-name>/; else fall back to --dir or ~/.openclaw
+    let baseDir;
+    if (projectName) {
+      baseDir = path.resolve(process.cwd(), projectName);
+    } else {
+      baseDir = resolveBaseDir(options.dir);
+    }
 
     const messages = [];
     function log(msg) {
@@ -564,7 +639,7 @@ const initCmd = new Command('init')
 
     if (!jsonMode) {
       console.log('');
-      console.log(`  ONXZA v0.1.0 — init${options.dryRun ? ' (dry run)' : ''}`);
+      console.log(`  ONXZA v0.1.0 — init${options.dryRun ? ' (dry run)' : ''}${projectName ? ` "${projectName}"` : ''}`);
       console.log(`  Target: ${baseDir}`);
       console.log(`  ${'─'.repeat(54)}`);
       console.log('');
@@ -572,6 +647,7 @@ const initCmd = new Command('init')
 
     const result = runInit({
       baseDir,
+      projectName,
       dryRun: !!options.dryRun,
       force:  !!options.force,
       noGit:  options.git === false,
@@ -613,7 +689,9 @@ const initCmd = new Command('init')
     console.log(`  ${created} item(s) created, ${skipped} already existed.`);
     if (result.checkpoint) console.log(`  Checkpoint: ${result.checkpoint}`);
     console.log('');
+    const nextDir = projectName ? `  cd ${projectName} && ` : '  ';
     console.log('  Next steps:');
+    if (projectName) console.log(`    cd ${projectName}`);
     console.log('    onxza agent create [Company]_[Dept]_[Role]   # Create your first agent');
     console.log('    onxza company add <name>                      # Register your company');
     console.log('    onxza status                                  # View system health');
