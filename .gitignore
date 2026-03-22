@@ -16,6 +16,7 @@ memory/
 memory.md
 MEMORY.md
 tickets/
+!cli/src/tickets/
 approvals/
 logs/
 companies/
