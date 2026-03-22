@@ -342,12 +342,104 @@ ${subdirDescriptions[subdir] || ''}
 }
 
 // ---------------------------------------------------------------------------
+// Remove company
+// ---------------------------------------------------------------------------
+
+/**
+ * Remove a company registration from openclaw.json.
+ * Does NOT delete shared-learnings directory (data preservation by default).
+ * Pass `opts.deleteFiles = true` to also remove the shared-learnings dir.
+ *
+ * @param {string} code - uppercase company code
+ * @param {object} opts - { deleteFiles: boolean }
+ * @returns {{ code: string, removedFrom: string[], deletedPaths: string[] }}
+ */
+function removeCompany(code, opts = {}) {
+  const UP = code.toUpperCase();
+  const removedFrom  = [];
+  const deletedPaths = [];
+
+  // 1. Remove from openclaw.json companies[]
+  let data = {};
+  try {
+    data = JSON.parse(fs.readFileSync(OPENCLAW_JSON, 'utf8'));
+  } catch {
+    data = {};
+  }
+  if (Array.isArray(data.companies)) {
+    const before = data.companies.length;
+    data.companies = data.companies.filter((c) => c.code !== UP);
+    if (data.companies.length < before) {
+      fs.writeFileSync(OPENCLAW_JSON, JSON.stringify(data, null, 2) + '\n', 'utf8');
+      removedFrom.push('openclaw.json companies[]');
+    }
+  }
+
+  // 2. Clear active company context if it was this company
+  if (getActiveCompany() === UP) {
+    setActiveCompany(null);
+    removedFrom.push('context.json (active company cleared)');
+  }
+
+  // 3. Optionally delete shared-learnings directory
+  if (opts.deleteFiles) {
+    const companyDir = path.join(SHARED_LEARNINGS, UP);
+    if (fs.existsSync(companyDir)) {
+      fs.rmSync(companyDir, { recursive: true, force: true });
+      deletedPaths.push(companyDir);
+    }
+  }
+
+  return { code: UP, removedFrom, deletedPaths };
+}
+
+/**
+ * Get detailed status for a single company.
+ * @param {string} code - uppercase company code
+ * @returns {object} status including agent count, open tickets, active flag
+ */
+function getCompanyStatus(code) {
+  const UP = code.toUpperCase();
+  const companies = listCompanies();
+  const co = companies.find((c) => c.code === UP);
+  if (!co) return null;
+
+  // Count open tickets assigned to agents of this company
+  const ticketsDir = path.join(WORKSPACE, 'tickets', 'open');
+  let openTickets = 0;
+  let myTickets   = 0;
+  if (fs.existsSync(ticketsDir)) {
+    for (const f of fs.readdirSync(ticketsDir)) {
+      if (!f.endsWith('.md')) continue;
+      try {
+        const content = fs.readFileSync(path.join(ticketsDir, f), 'utf8');
+        openTickets++;
+        // Check if assigned to any agent of this company (prefix check)
+        const m = content.match(/assigned_to:\s*(\S+)/i);
+        if (m && m[1].toUpperCase().startsWith(UP + '-')) myTickets++;
+        // Also check for DTP_ONXZA_CLI style
+        if (m && m[1].toUpperCase().startsWith(UP + '_')) myTickets++;
+      } catch { /* skip */ }
+    }
+  }
+
+  return {
+    ...co,
+    openTickets:    myTickets,
+    totalOpenTickets: openTickets,
+    sharedLearningsPath: path.join(SHARED_LEARNINGS, UP),
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Exports
 // ---------------------------------------------------------------------------
 
 module.exports = {
   listCompanies,
   addCompany,
+  removeCompany,
+  getCompanyStatus,
   companyExists,
   getActiveCompany,
   setActiveCompany,

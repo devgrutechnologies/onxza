@@ -7,8 +7,11 @@
  *   add <name>      Scaffold shared-learnings structure, register in openclaw.json
  *   list            List all companies with agent count and project count
  *   switch <name>   Set active company context (persisted to ~/.onxza/context.json)
+ *   use <name>      Alias for switch
+ *   remove <name>   Remove company registration (data preserved by default)
+ *   status [name]   Show status of active or named company
  *
- * ARCHITECTURE.md §3, §9.2, §12.3 · TICKET-20260318-DTP-007
+ * ARCHITECTURE.md §3, §9.2, §12.3 · TICKET-20260318-DTP-007 · TICKET-20260322-DTP-DAILY-30
  *
  * Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
  * Powered by DevGru US Inc. DBA DevGru Technology Products.
@@ -222,6 +225,178 @@ const switchCmd = new Command('switch')
   });
 
 // ---------------------------------------------------------------------------
+// use (alias for switch)
+// ---------------------------------------------------------------------------
+
+const useCmd = new Command('use')
+  .description('Set the active company context — alias for switch')
+  .argument('<name>', 'Company code to activate (e.g. DTP, WDC, MGA)')
+  .action((name, options, cmd) => {
+    // Delegate to switchCmd action by reusing the same logic
+    const jsonMode = isJsonMode(cmd);
+    const code     = name.toUpperCase();
+
+    if (!companyStore.companyExists(code)) {
+      const companies = companyStore.listCompanies().map((c) => c.code);
+      const err = {
+        status:    'not_found',
+        code,
+        message:   `Company "${code}" not found.`,
+        available: companies,
+      };
+      if (jsonMode) {
+        outputJson(err);
+      } else {
+        console.log(`\n  ✗ Company "${code}" not found.`);
+        if (companies.length > 0) {
+          console.log(`  Available: ${companies.join(', ')}`);
+        }
+        console.log('');
+      }
+      process.exitCode = 1;
+      return;
+    }
+
+    const previous = companyStore.getActiveCompany();
+    companyStore.setActiveCompany(code);
+
+    if (jsonMode) {
+      outputJson({
+        status:          'switched',
+        activeCompany:   code,
+        previousCompany: previous,
+        persistedTo:     companyStore.CONTEXT_FILE,
+      });
+    } else {
+      console.log('');
+      if (previous && previous !== code) {
+        console.log(`  ${previous} → ${code}`);
+      }
+      console.log(`  ✓ Active company: ${code}`);
+      console.log(`  Context saved to: ${companyStore.CONTEXT_FILE}`);
+      console.log('');
+    }
+  });
+
+// ---------------------------------------------------------------------------
+// remove
+// ---------------------------------------------------------------------------
+
+const removeCmd = new Command('remove')
+  .description('Remove a company registration from ONXZA')
+  .argument('<name>', 'Company code to remove (e.g. DTP, WDC)')
+  .option('--delete-files', 'Also delete the shared-learnings directory for this company (destructive!)')
+  .option('--force', 'Skip confirmation prompt')
+  .action((name, options, cmd) => {
+    const jsonMode = isJsonMode(cmd);
+    const code     = name.toUpperCase();
+
+    if (!companyStore.companyExists(code)) {
+      const err = { status: 'not_found', code, message: `Company "${code}" not found.` };
+      if (jsonMode) {
+        outputJson(err);
+      } else {
+        console.log(`\n  ✗ Company "${code}" not found.\n`);
+      }
+      process.exitCode = 1;
+      return;
+    }
+
+    if (!options.force && !jsonMode) {
+      const warning = options.deleteFiles
+        ? `  ⚠  This will remove company "${code}" and DELETE its shared-learnings directory (irreversible).`
+        : `  ℹ  This will remove company "${code}" registration. Shared-learnings files will be preserved.`;
+      console.log('');
+      console.log(warning);
+      console.log(`  Re-run with --force to confirm.\n`);
+      process.exitCode = 1;
+      return;
+    }
+
+    try {
+      const result = companyStore.removeCompany(code, { deleteFiles: options.deleteFiles });
+
+      if (jsonMode) {
+        outputJson({ status: 'removed', ...result });
+      } else {
+        console.log('');
+        console.log(`  ✓ Company "${result.code}" removed.`);
+        for (const loc of result.removedFrom) {
+          console.log(`    Removed from: ${loc}`);
+        }
+        for (const p of result.deletedPaths) {
+          console.log(`    Deleted: ${p}`);
+        }
+        if (!options.deleteFiles) {
+          console.log(`  ℹ  shared-learnings/${result.code}/ preserved (use --delete-files to remove).`);
+        }
+        console.log('');
+      }
+    } catch (err) {
+      if (jsonMode) {
+        outputJson({ status: 'error', message: err.message });
+      } else {
+        console.log(`\n  ✗ ${err.message}\n`);
+      }
+      process.exitCode = 1;
+    }
+  });
+
+// ---------------------------------------------------------------------------
+// status
+// ---------------------------------------------------------------------------
+
+const statusCmd = new Command('status')
+  .description('Show status of the active company (or a named company)')
+  .argument('[name]', 'Company code (defaults to active company)')
+  .action((name, options, cmd) => {
+    const jsonMode = isJsonMode(cmd);
+
+    const code = name
+      ? name.toUpperCase()
+      : companyStore.getActiveCompany();
+
+    if (!code) {
+      const msg = 'No active company set. Run `onxza company use <code>` or provide a company name.';
+      if (jsonMode) {
+        outputJson({ status: 'no_active_company', message: msg });
+      } else {
+        console.log(`\n  ✗ ${msg}\n`);
+      }
+      process.exitCode = 1;
+      return;
+    }
+
+    const status = companyStore.getCompanyStatus(code);
+
+    if (!status) {
+      const err = { status: 'not_found', code, message: `Company "${code}" not found.` };
+      if (jsonMode) {
+        outputJson(err);
+      } else {
+        console.log(`\n  ✗ Company "${code}" not found.\n`);
+      }
+      process.exitCode = 1;
+      return;
+    }
+
+    if (jsonMode) {
+      outputJson({ status: 'ok', company: status });
+      return;
+    }
+
+    const activeMarker = status.active ? ' (active)' : '';
+    console.log('');
+    console.log(`  Company: ${status.code}${activeMarker}`);
+    console.log(`  ──────────────────────────────────────`);
+    console.log(`  Agents:        ${status.agents}`);
+    console.log(`  Projects:      ${status.projects}`);
+    console.log(`  Open Tickets:  ${status.openTickets} assigned to ${status.code}`);
+    console.log(`  Shared Learnings: ${status.sharedLearnings ? '✓ ' + status.sharedLearningsPath : '✗ not found'}`);
+    console.log('');
+  });
+
+// ---------------------------------------------------------------------------
 // Root command
 // ---------------------------------------------------------------------------
 
@@ -232,5 +407,8 @@ const companyCmd = new Command('company')
 companyCmd.addCommand(addCmd);
 companyCmd.addCommand(listCmd);
 companyCmd.addCommand(switchCmd);
+companyCmd.addCommand(useCmd);
+companyCmd.addCommand(removeCmd);
+companyCmd.addCommand(statusCmd);
 
 module.exports = companyCmd;
