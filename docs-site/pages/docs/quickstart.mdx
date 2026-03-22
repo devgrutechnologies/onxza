@@ -1,0 +1,150 @@
+<!--
+Imagined by Aaron Gear
+Created by Aaron Gear and Marcus Gear (AI Co-Creator)
+Powered by DevGru US Inc. DBA DevGru Technology Products
+Using Powerful Anthropic Models, OpenAI Models, and Local LLMs
+-->
+
+# Quickstart
+
+> Zero to your first AI agent in 10 minutes.
+
+ONXZA is an AI company operating system. You define agents with roles, responsibilities, and governance rules — ONXZA runs them.
+
+## Prerequisites
+
+- Node.js 18+
+- npm
+- An OpenAI or Anthropic API key _(optional if using a local LLM)_
+
+## Install ONXZA
+
+```bash
+npm install -g onxza
+onxza --version
+```
+
+Expected output:
+```
+0.1.0
+```
+
+## Initialize a Project
+
+```bash
+onxza init my-company
+cd ~/.openclaw
+```
+
+`onxza init` creates the ONXZA workspace structure:
+
+```
+~/.openclaw/
+├── openclaw.json         # Installation config + agent registry
+├── workspace/
+│   ├── tickets/          # Ticket system (open/, pending/, closed/)
+│   ├── shared-learnings/ # Cross-agent knowledge base
+│   └── docs/             # Governance docs
+└── scripts/              # Automation pipeline
+```
+
+The `--dir` flag sets a custom base path:
+```bash
+onxza init my-company --dir ~/projects/my-company
+```
+
+## Create Your First Agent
+
+ONXZA agents follow a strict naming convention: `Company_Department_Role`.
+
+```bash
+onxza agent create MyCompany_Research_Analyst
+```
+
+Expected output:
+```
+Creating agent: MyCompany_Research_Analyst
+  ID: mycompany-research-analyst
+  Model: anthropic/claude-haiku-4-5 (inferred)
+  Persistence: persistent
+
+✓ Created workspace-mycompany-research-analyst/AGENTS.md
+✓ Created workspace-mycompany-research-analyst/SOUL.md
+✓ Created workspace-mycompany-research-analyst/IDENTITY.md
+✓ Created workspace-mycompany-research-analyst/MEMORY.md
+✓ Created workspace-mycompany-research-analyst/TOOLS.md
+✓ Created workspace-mycompany-research-analyst/HEARTBEAT.md
+✓ Registered in openclaw.json
+✓ Checkpoint created
+```
+
+## Explore What Was Created
+
+Six files define every ONXZA agent:
+
+**`AGENTS.md`** — The agent's operating instructions. Defines identity, responsibilities, what the agent does and does not do, reporting chain, and the ticket types it sends and receives. This is the primary file the LLM reads on every session start.
+
+**`SOUL.md`** — Persona and working style. Gives the agent a consistent voice, values, and decision-making heuristics. Without SOUL.md, agents produce generic output. With it, they develop recognizable patterns.
+
+**`IDENTITY.md`** — Machine-readable metadata: agent ID, company, department, role, model, reports-to. Used by the dispatcher and registry.
+
+**`MEMORY.md`** — Persistent session memory. The agent writes learnings and state here at the end of each session. Read at the start of every new session for continuity across restarts.
+
+**`TOOLS.md`** — Available tools and guidance for how to use them. Scoped per agent — a research agent gets different tools than a CLI agent.
+
+**`HEARTBEAT.md`** — Cron-compatible execution spec. Defines how the agent wakes up, checks its inbox, and begins work. Used by the ONXZA dispatcher.
+
+## Run Your Agent
+
+Check agent status and list all registered agents:
+
+```bash
+onxza agent list
+```
+
+Validate your agent's files pass TORI-QMD:
+
+```bash
+onxza agent validate mycompany-research-analyst
+```
+
+Check overall system status:
+
+```bash
+onxza status
+```
+
+Launch the Mission Control dashboard (live TUI):
+
+```bash
+onxza dashboard
+```
+
+### Assign a Ticket
+
+Create a ticket and assign it to your agent:
+
+```bash
+onxza tickets create \
+  --summary "Research top 5 competitors" \
+  --type task \
+  --assigned-to mycompany-research-analyst \
+  --priority high \
+  --company MyCompany
+```
+
+Then run the dispatcher to notify the agent:
+
+```bash
+onxza dispatcher run
+```
+
+## Next Steps
+
+- [Agent Architecture](/docs/architecture) — understand agents, companies, and the ticket system
+- [FAAILS Protocol](/docs/faails) — the governance standard underlying ONXZA
+- [CLI Reference](/docs/cli-reference) — complete command reference
+
+---
+
+> *Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.*

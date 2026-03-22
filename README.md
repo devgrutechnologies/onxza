@@ -7,6 +7,11 @@ Using Powerful Anthropic Models, OpenAI Models, and Local LLMs
 
 # ONXZA
 
+[![npm version](https://img.shields.io/npm/v/onxza.svg)](https://www.npmjs.com/package/onxza)
+[![CI](https://github.com/devgrutechnologies/onxza/workflows/CI/badge.svg)](https://github.com/devgrutechnologies/onxza/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 **Built to do. Always doing.**
 
 > *Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.*
@@ -38,6 +43,20 @@ Your company (runs on ONXZA)
  ↓
 FAAILS (the open standard underneath it all)
 ```
+
+---
+
+## Install
+
+```bash
+npm install -g onxza
+onxza init my-company
+```
+
+<!-- npm publish pending — coming shortly if badge shows "invalid" -->
+
+**Questions?** Open a [Discussion](https://github.com/devgrutechnologies/onxza/discussions).  
+**Found a bug?** Open an [Issue](https://github.com/devgrutechnologies/onxza/issues).
 
 ---
 

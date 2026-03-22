@@ -1,5 +1,6 @@
 export default {
   "index": "Overview",
+  "overview": "Developer Guide",
   "001-agent-identity": "001: Agent Identity & Naming",
   "002-inter-agent-communication": "002: Inter-Agent Communication",
   "003-vision-lock-governance": "003: Vision Lock Governance",

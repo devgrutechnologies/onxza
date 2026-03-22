@@ -1,0 +1,136 @@
+<!--
+Imagined by Aaron Gear
+Created by Aaron Gear and Marcus Gear (AI Co-Creator)
+Powered by DevGru US Inc. DBA DevGru Technology Products
+Using Powerful Anthropic Models, OpenAI Models, and Local LLMs
+-->
+
+# FAAILS Protocol — Developer Guide
+
+> **Federated Autonomous AI Lifecycle Standard** — the governance framework for safe, scalable multi-agent AI systems.
+
+## What is FAAILS?
+
+FAAILS is a 10-specification protocol that defines how AI agents are created, governed, communicate, and operate within an ONXZA workspace. Think of it as the rulebook that every agent follows — the difference between a collection of LLM calls and a company that runs itself.
+
+Without FAAILS, multi-agent systems devolve quickly: agents step on each other's work, memory leaks across boundaries, decisions get made without human oversight, and quality degrades over time with no mechanism to recover. FAAILS solves each of these problems with a named, versioned specification.
+
+---
+
+## The 10 Specifications
+
+### FAAILS-001 — Agent Identity & Naming
+
+Every agent has a canonical three-part name: `Company_Department_Role` (e.g., `DTP_ONXZA_Architect`). This name is not optional — it encodes ownership, function, and routing in a single identifier. Each agent also has a six-file workspace: `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `MEMORY.md`, `TOOLS.md`, `HEARTBEAT.md`.
+
+**Why it matters:** Automated routing, permission checking, and team composition require a reliable identity contract. The naming convention gives you that without a centralized registry.
+
+### FAAILS-002 — Inter-Agent Communication
+
+Agents never communicate directly (no function calls, no shared memory writes). All coordination happens through tickets: structured files with frontmatter (`id`, `assigned_to`, `priority`, `status`) that live in a shared `tickets/` directory. The dispatcher scans open tickets and notifies agents via their inbox.
+
+**Why it matters:** Ticket-based communication is asynchronous, auditable, and serializable. You get a complete history of every instruction ever given and every result ever returned.
+
+### FAAILS-003 — Vision Lock Governance
+
+Every company has a `vision.md` that is treated as immutable once approved. Agents can read it; only authorized humans can modify it. A CDP (Collaborative Definition Protocol) board session must precede any vision change. This prevents goal drift — the silent killer of long-running agent systems.
+
+**Why it matters:** Agents that optimize for anything other than the locked vision are a liability. FAAILS-003 makes "what we're building" a governed artifact, not a vibe.
+
+### FAAILS-004 — Memory Isolation Model
+
+Agent memory is classified as either `PRIVATE` (workspace-scoped, never shared) or `SHARED` (promoted to `shared-learnings/` through a review process). Cross-company memory access requires an explicit grant. There are no global variables.
+
+**Why it matters:** Without memory isolation, a bug in one agent can corrupt the knowledge base for the entire system. Isolation + promotion creates a safe path for knowledge to flow upward without contamination.
+
+### FAAILS-005 — Shared Learnings Architecture
+
+Knowledge flows up a hierarchy: Agent Session Memory → Company Learnings → Global Learnings → Community. Each promotion step requires explicit action. The `onxza learnings push` and `onxza learnings promote` commands implement this pipeline.
+
+**Why it matters:** Agents that can't learn from each other are just expensive API calls. The Shared Learnings architecture creates compounding intelligence — each agent makes the next one smarter.
+
+### FAAILS-006 — Skill Lifecycle Standard
+
+Skills are installable capability packs (similar to npm packages, but for agent behavior). They have a defined format, version lifecycle, install/update/publish flow, and deprecation path. Skills are not prompt templates — they are structured capability definitions with metadata, instructions, and tests.
+
+**Why it matters:** A skill created once can be shared across agents and companies. The marketplace turns individual improvements into platform-wide improvements.
+
+### FAAILS-007 — Automation Tier Framework
+
+Three tiers of automation:
+- **Tier 1** — Fully automated, no human review (cheap, fast, low-stakes)
+- **Tier 2** — Automated with human-in-the-loop at decision points
+- **Tier 3** — Human-initiated, agent-assisted (complex, high-stakes)
+
+Every task is classified before execution. Tier determines which model runs it and whether approval gates are required.
+
+**Why it matters:** Not every task should run the most powerful model. Tier classification drives cost optimization automatically — and keeps humans in the loop where it matters.
+
+### FAAILS-008 — Agent Creation Standard
+
+New agents follow a five-phase creation process: design doc → scaffolding → TORI-QMD validation → registration → test task. `onxza agent create` implements phases 2–5. Phase 1 (design doc) is always human-authored or PM-directed.
+
+**Why it matters:** Agents spawned without a design process accumulate technical debt immediately. The creation standard ensures every agent ships with clear scope, boundaries, and passing quality gates.
+
+### FAAILS-009 — Escalation & Approval Protocol
+
+Agents escalate when: confidence drops below threshold, an action is irreversible, a decision falls outside their defined scope, or a quality loop exceeds 3 iterations. Escalation creates a structured ticket with full context — not a vague "I need help" message.
+
+**Why it matters:** Escalation without protocol creates noise. Escalation with protocol creates signal. FAAILS-009 defines exactly what goes in an escalation ticket so humans can act fast.
+
+### FAAILS-010 — Knowledge Base Governance
+
+Documentation (P&Ps, governance docs, shared learnings) follows a governed lifecycle: draft → review → active → deprecated. No agent writes to governance docs without authorization. The `onxza validate` command enforces TORI-QMD quality standards on all `.md` files.
+
+**Why it matters:** An undocumented system becomes an unmaintainable system. Knowledge base governance means the documentation is as reliable as the code.
+
+---
+
+## Why FAAILS Matters for Multi-Agent Systems
+
+Single agents are powerful but brittle. Multi-agent systems are powerful and robust — but only if the coordination layer is sound. FAAILS is that layer.
+
+Without governance:
+- Agents overwrite each other's work
+- Memory leaks across company boundaries
+- Quality degrades with no feedback loop
+- Humans have no visibility into what agents are doing
+
+With FAAILS:
+- Every action is ticketed and auditable
+- Memory is isolated and promotable
+- Quality loops are bounded (max 3 iterations before escalation)
+- Vision is locked — agents can't drift
+
+---
+
+## How to Apply FAAILS to Your Own Agents
+
+Three practical rules:
+
+**1. Name it correctly or don't deploy it.** The `Company_Department_Role` naming convention is non-negotiable in FAAILS-compliant systems. Use `onxza agent create` — it validates the name before creating any files.
+
+**2. Use tickets for everything inter-agent.** If two of your agents need to coordinate, that coordination should be a ticket, not a direct function call. Tickets are auditable. Direct calls are not.
+
+**3. Write to MEMORY.md at the end of every session.** Agents that don't write memory are stateless — they start from zero on every restart. Even a two-sentence summary in `MEMORY.md` compounds over hundreds of sessions into a durable knowledge base.
+
+---
+
+## Specification Reference
+
+All 10 specifications are available as standalone docs:
+
+- [FAAILS-001: Agent Identity](/docs/faails/001-agent-identity)
+- [FAAILS-002: Inter-Agent Communication](/docs/faails/002-inter-agent-communication)
+- [FAAILS-003: Vision Lock Governance](/docs/faails/003-vision-lock-governance)
+- [FAAILS-004: Memory Isolation](/docs/faails/004-memory-isolation)
+- [FAAILS-005: Shared Learnings](/docs/faails/005-shared-learnings)
+- [FAAILS-006: Skill Lifecycle](/docs/faails/006-skill-lifecycle)
+- [FAAILS-007: Automation Tiers](/docs/faails/007-automation-tiers)
+- [FAAILS-008: Agent Creation](/docs/faails/008-agent-creation)
+- [FAAILS-009: Escalation Protocol](/docs/faails/009-escalation-approval)
+- [FAAILS-010: Knowledge Base Governance](/docs/faails/010-knowledge-base)
+
+---
+
+> *Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.*
