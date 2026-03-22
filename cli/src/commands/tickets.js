@@ -399,4 +399,32 @@ ticketsCmd
   .addHelpText('after', `\nValid statuses: ${store.VALID_STATUSES.join(' | ')}`)
   .action(moveAction);
 
+ticketsCmd
+  .command('close <ticket-id>')
+  .description('Close a ticket (moves to tickets/closed/ with completion note)')
+  .option('--note <text>', 'Completion note to append to the ticket')
+  .action((ticketId, options, cmd) => {
+    const jsonMode = isJsonMode(cmd);
+    const ticket   = store.findById(ticketId);
+    if (!ticket) {
+      const err = { status: 'not_found', id: ticketId };
+      if (jsonMode) { outputJson(err); } else { console.log(`\n  ✗ Ticket "${ticketId}" not found.\n`); }
+      process.exitCode = 1;
+      return;
+    }
+    if (options.note) {
+      // Append completion note before moving
+      const fs     = require('fs');
+      const append = `\n## Completion Note\nClosed ${new Date().toISOString().slice(0,10)} by CLI.\n${options.note}\n`;
+      fs.appendFileSync(ticket.filePath, append, 'utf8');
+    }
+    const result = store.moveTicket(ticket, 'closed');
+    if (jsonMode) {
+      outputJson({ status: 'closed', id: ticket.id, newPath: result.newPath });
+      return;
+    }
+    console.log(`\n  ✓ Ticket closed: ${ticket.id}`);
+    console.log(`    Moved to: tickets/closed/\n`);
+  });
+
 module.exports = ticketsCmd;
