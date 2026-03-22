@@ -10,12 +10,12 @@
   },
   "homepage": "https://onxza.com",
   "bugs": {
-    "url": "https://github.com/devgru-technology-products/onxza/issues",
+    "url": "https://github.com/devgrutechnologies/onxza/issues",
     "email": "hello@onxza.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/devgru-technology-products/onxza.git",
+    "url": "https://github.com/devgrutechnologies/onxza.git",
     "directory": "cli"
   },
   "engines": {
