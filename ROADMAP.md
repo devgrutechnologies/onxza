@@ -1,9 +1,9 @@
 ---
 title: ONXZA Product Roadmap — v0.1.0 to v1.0.0
-version: 1.0.0
+version: 1.1.0
 status: active
 created: 2026-03-18
-last_updated: 2026-03-18
+last_updated: 2026-03-22
 owner: DTP_ONXZA_PM
 tags: roadmap, milestones, sprint, planning, v1, onxza
 summary: Official ONXZA product roadmap. 30/90/180-day milestones sequencing v0.1.0 public launch through v1.0.0 production release. Maps all 36 backlog tickets to milestones, identifies critical path, Aaron-required items, and quick wins.

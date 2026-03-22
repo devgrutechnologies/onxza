@@ -1,0 +1,171 @@
+# SOUL.md Guide
+
+> SOUL.md is the personality file that defines how an agent thinks, communicates, and makes decisions. It is the difference between an agent that executes instructions and one that brings judgment to its work.
+
+## Why SOUL.md Matters
+
+Two agents with identical AGENTS.md files but different SOUL.md files will approach the same task differently. An architect agent with a soul that values "correctness over speed" will produce a more thorough design review than one that values "ship fast, fix later."
+
+SOUL.md is not decoration. It is functional configuration. The language model reads it at the start of every session, and it shapes every response, every decision, every prioritization choice the agent makes.
+
+## Anatomy of a SOUL.md
+
+A well-written SOUL.md has four parts:
+
+### 1. The Opening Statement
+
+One to three sentences that capture the agent's relationship to its domain. This is not a job description — it is a character statement.
+
+**Good:**
+```markdown
+Architecture is the decisions you make once that everything else depends on.
+I think in systems, tradeoffs, and 10x scale. Every decision I make should be
+one I'm happy to defend in two years.
+```
+
+**Bad:**
+```markdown
+I am an architecture agent. I design systems and make technical decisions.
+```
+
+The first version gives the model a mental framework. The second is a job title restated as prose.
+
+### 2. Working Style
+
+A short list of behavioral principles that guide how the agent operates day-to-day.
+
+```markdown
+## Working Style
+- I read before I act. Context first, execution second.
+- I write everything down. If it's not in a file, it didn't happen.
+- I escalate early. A small flag now beats a big problem later.
+- I stay in my lane. I do my role exceptionally, not everyone else's role adequately.
+```
+
+Keep these concrete. "I value quality" is vague. "I run validation before marking any ticket complete" is actionable.
+
+### 3. Values
+
+What the agent prioritizes when making tradeoffs. These should reflect real tensions in the agent's domain.
+
+```markdown
+## Values
+- Accuracy over speed (but speed matters too)
+- Clear communication, no ambiguity
+- Ownership of outcomes, not just tasks
+- Continuous improvement — every session, slightly better
+```
+
+The parenthetical "(but speed matters too)" is important — it acknowledges the tradeoff instead of pretending accuracy has no cost. Agents that acknowledge tradeoffs make better decisions than agents that pretend tradeoffs don't exist.
+
+### 4. Proactive Loop (Optional)
+
+What the agent does when no tickets are assigned. This turns idle time into productive architecture reviews, documentation improvements, or knowledge gap analysis.
+
+```markdown
+## Proactive Loop
+When no tickets are assigned:
+1. Review ARCHITECTURE-v0.1.md for gaps or ambiguities
+2. Check FAAILS-GAPS.md for unaddressed specs
+3. Review recent backend work against architecture for drift
+4. Create tickets for any gaps discovered
+```
+
+## Writing Tips
+
+### Be Specific, Not Generic
+
+Every agent could claim to "value quality and collaboration." That adds no signal. Instead, write what quality means *for this specific role.*
+
+For a code review agent: "I would rather flag a false positive than miss a real bug. When in doubt, I flag it."
+
+For a documentation agent: "I write for the reader who has five minutes and no context. Every page must make sense on its own."
+
+### Match Tone to Role
+
+A research agent and a marketing agent should not sound the same. A researcher might be methodical and citation-heavy. A marketer might be punchy and audience-focused. Let the SOUL.md reflect that.
+
+### Avoid Superlatives
+
+"I am the best architect" or "I produce flawless output" sets expectations the agent cannot meet. Confidence is good; overconfidence breaks trust when reality intervenes.
+
+### Keep It Short
+
+SOUL.md is read at the start of every session. Long files waste context window and dilute signal. Target 150–300 words. If it takes more than a minute to read, it is too long.
+
+## Template
+
+```markdown
+# SOUL.md — {{AGENT_NAME}}
+
+I operate with precision, professionalism, and purpose.
+
+[2-3 sentences: This agent's relationship to their domain. What drives them.
+What mindset defines how they approach work.]
+
+## Working Style
+- [Concrete behavioral principle 1]
+- [Concrete behavioral principle 2]
+- [Concrete behavioral principle 3]
+- [Concrete behavioral principle 4]
+
+## Values
+- [Value 1 — with acknowledged tradeoff if relevant]
+- [Value 2]
+- [Value 3]
+- [Value 4]
+
+*Built on ONXZA. Part of the [Company] family.*
+```
+
+## Examples by Role
+
+### Platform Architect
+```markdown
+Architecture is the decisions you make once that everything else depends on.
+I think in systems, tradeoffs, and 10x scale.
+```
+
+### Backend Engineer
+```markdown
+Code that ships is code that matters. I write clean, tested, documented code
+that other engineers can read six months from now without asking questions.
+```
+
+### Research Analyst
+```markdown
+Every claim needs evidence. I follow the data, not the narrative.
+When the data contradicts the hypothesis, I change the hypothesis.
+```
+
+### Project Manager
+```markdown
+My job is clarity. I make sure every agent knows exactly what to do, why it matters,
+and when it needs to be done. Ambiguity is the enemy of execution.
+```
+
+### Marketing Writer
+```markdown
+Good writing is invisible. The reader should feel the idea, not the structure.
+I write for humans first, search engines second, and word counts never.
+```
+
+## Common Mistakes
+
+| Mistake | Why It Hurts | Fix |
+|---|---|---|
+| Generic statements | Adds no signal to the model | Write role-specific principles |
+| Too long (500+ words) | Wastes context, dilutes key signals | Target 150–300 words |
+| Job description restated | Duplicates AGENTS.md, adds nothing | Focus on *how*, not *what* |
+| No tradeoff acknowledgment | Agent makes unrealistic commitments | Add parenthetical qualifiers |
+| Missing proactive loop | Agent sits idle when no tickets arrive | Add a 3–5 item idle protocol |
+
+## Updating SOUL.md
+
+SOUL.md should evolve as the agent matures. After the first 10 tasks (training period), review whether the working style and values actually match how the agent performs best. Adjust based on evidence, not aspiration.
+
+Changes to SOUL.md should be rare — perhaps once per quarter. If you are changing SOUL.md frequently, the issue is probably in AGENTS.md (responsibilities) not SOUL.md (personality).
+
+---
+
+*Previous: [Agent Anatomy ←](/docs/agent-development) · Next: [MEMORY.md Guide →](/docs/agent-development/memory-guide)*

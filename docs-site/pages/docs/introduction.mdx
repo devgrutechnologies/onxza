@@ -1,0 +1,227 @@
+---
+title: Introduction to ONXZA
+---
+
+# Introduction to ONXZA
+
+ONXZA is an open-source AI company operating system.
+
+It provides the governance layer, communication infrastructure, agent lifecycle management, knowledge architecture, and quality enforcement needed to run autonomous agent fleets at company scale.
+
+**ONXZA is not:**
+- A chatbot framework
+- A workflow automation tool
+- A replacement for your infrastructure
+- A closed-source product
+
+**ONXZA is:**
+- An operating system that sits between raw LLM capability and real-world outcomes
+- A governance and coordination layer for autonomous agents
+- Built on top of OpenClaw (agent runtime)
+- Open source for non-commercial use
+- A reference implementation of FAAILS (open protocol specification)
+
+## The Problem ONXZA Solves
+
+LLMs are powerful, but getting them to:
+- Coordinate reliably across many tasks
+- Make decisions with proper authority levels
+- Learn from experience and improve over time
+- Maintain clear audit trails
+- Respect human intent and boundaries
+- Handle failures gracefully
+
+...requires more than a chat interface or simple API wrapper.
+
+ONXZA solves this by providing:
+1. **Governance** — Clear decision-making authority and vision lock
+2. **Communication** — Structured ticket system for inter-agent work
+3. **Quality** — Verification protocol that catches errors before they propagate
+4. **Learning** — Knowledge that flows from specialists → company → global → community
+5. **Observability** — Complete transparency into agent decisions
+6. **Scalability** — From one agent to fleets of hundreds
+
+## Core Principles
+
+### Vision is Immutable
+Once a vision document is approved, no agent below the principal can modify it. This ensures intent doesn't drift. All evolution goes through formal governance.
+
+### Knowledge Flows Upward
+Learning moves from specialist agents → company-level patterns → global standards → FAAILS community. The system gets smarter with every task.
+
+### All Work is Visible
+Every task is a ticket. Every decision is logged. Every escalation is recorded. Complete transparency.
+
+### Quality is Non-Negotiable
+The FVP (Final Verification Protocol) is a quality gate every agent must pass. Bad output doesn't propagate.
+
+### No Agent Acts Alone
+Agents coordinate through tickets. No direct messaging, no hidden agreements. All communication is recorded.
+
+### Autonomy Has Limits
+Authority is hierarchical. Agents escalate decisions that exceed their authority. Humans remain in control.
+
+## Key Concepts
+
+### Agent
+
+An agent is an autonomous worker specialized for a specific domain.
+
+**Examples:**
+- A documentation agent that writes and maintains docs
+- A code agent that generates and reviews code
+- A routing agent that intelligently assigns tasks
+- A verification agent that checks quality
+
+**Agent properties:**
+- Named with clear ownership and role
+- Has a configured model and capability tier
+- Has domain-specific skills and knowledge
+- Operates with clear scope boundaries
+- Reports to a supervisor
+- Maintains long-term memory
+
+### Ticket
+
+Work is assigned via tickets — structured markdown files in the ticket system.
+
+**Ticket properties:**
+- Assigned to a specific agent
+- Has clear acceptance criteria
+- Can be escalated if the agent can't resolve it
+- Moves through lifecycle: open → in-progress → pending-approval → blocked → closed
+- Complete audit trail is maintained
+
+### Vision
+
+A vision document is the immutable north star for a project.
+
+**Vision properties:**
+- Approved by human authority
+- Cannot be modified once approved
+- Guides all decisions agents make
+- Includes strategic goals and non-negotiables
+- If a task conflicts with vision, vision wins
+
+### Skill
+
+A skill is a packaged piece of domain knowledge.
+
+**Examples:**
+- "How to write clear API documentation"
+- "Python async patterns"
+- "Customer onboarding flow"
+- "Security hardening checklist"
+
+**Skill properties:**
+- Markdown document (not code)
+- Agent loads it as context
+- Can be company-level or global
+- Versioned and maintained
+- Can be published to marketplace
+
+### Shared Learning
+
+Knowledge that emerges from tasks and gets promoted.
+
+**Types:**
+- **Pattern** — An approach that worked
+- **Correction** — Something that failed and the fix
+- **Tool Note** — Observed behavior of an external service
+- **Skill** — Packaged domain knowledge
+- **Escalation Log** — Why something escalated and how it resolved
+
+**Flow:**
+```
+Specialist learns → Company patterns → Global patterns → FAAILS community
+```
+
+## How It Works: End-to-End
+
+### 1. Submit Work (Human)
+
+Create a ticket with clear requirements and acceptance criteria.
+
+### 2. Agent Executes (Autonomous)
+
+Agent reads the ticket and executes:
+- Reads vision document (to understand context)
+- Loads relevant skills
+- Executes work
+- Self-assesses confidence
+
+### 3. Quality Gate (Verification)
+
+Output runs through FVP:
+- Does it meet acceptance criteria? ✓
+- Is the writing clear? ✓
+- Is it accurate? ✓
+- Confidence ≥70%? ✓
+
+### 4. Feedback Loop (Learning)
+
+If verification fails:
+- Agent iterates
+
+If verification passes:
+- Output accepted
+- Agent extracts learnings
+- Learnings promoted to shared patterns
+- Task closes
+
+### 5. Knowledge Propagates
+
+Learnings flow upward through the knowledge hierarchy, improving future work.
+
+## FAAILS: The Open Standard
+
+FAAILS (Frameworks for Autonomous Artificial Intelligence Learning Systems) is the open protocol that ONXZA implements.
+
+**FAAILS defines:**
+- How agents are structured and named
+- How agents communicate
+- How vision is protected from drift
+- How knowledge is classified and shared
+- How skills are created and distributed
+- How automation is tiered
+- How escalation works
+- How memory is isolated and protected
+
+**ONXZA is the reference implementation of FAAILS.** Anyone can build a FAAILS-compliant system using any stack.
+
+See the [FAAILS Protocol](/docs/faails) section for the complete specification.
+
+## Getting Started
+
+**New to ONXZA?**
+
+1. **[Quickstart](/docs/quickstart)** — Get your first agent running (10 minutes)
+2. **[System Architecture](/docs/architecture)** — Understand how it all works together
+3. **[Agent Development](/docs/agent-development)** — Build and understand agents
+
+**Ready to dive deeper?**
+
+- [FAAILS Specification](/docs/faails) — The protocol standard
+- [CLI Reference](/docs/cli-reference) — All available commands
+
+## Philosophy
+
+ONXZA is proven in production. It's used to run DevGru companies today. You're not adopting an experiment — you're adopting the system that runs a real company.
+
+## What Makes ONXZA Different
+
+| Aspect | ONXZA | Traditional Orchestration |
+|---|---|---|
+| **Governance** | Formal vision lock, immutable north star | Ad-hoc decision making |
+| **Learning** | Systematic knowledge promotion | Scattered learnings |
+| **Quality** | FVP gate on every output | Manual review |
+| **Transparency** | Complete audit trail | Black box |
+| **Scalability** | Designed for agent fleets | Works with 2-3 agents |
+| **Open Standard** | FAAILS specification | Proprietary lock-in |
+
+## Next Steps
+
+1. **Install:** [Quickstart](/docs/quickstart)
+2. **Understand:** [System Architecture](/docs/architecture)
+3. **Build:** [Agent Development](/docs/agent-development)
+4. **Learn:** [FAAILS Specifications](/docs/faails)

@@ -1,0 +1,171 @@
+# Agent Anatomy
+
+> Every ONXZA agent is a structured workspace of markdown files — identity, personality, memory, tools, and responsibilities — all working together to create a persistent, autonomous specialist.
+
+## What Is an ONXZA Agent?
+
+An ONXZA agent is not a prompt. It is a persistent identity with its own workspace, memory, responsibilities, and working style. Each agent operates within a defined scope, communicates through a structured ticket system, and improves over time through accumulated learnings.
+
+Think of an agent as a team member who:
+- Has a clear job description (AGENTS.md)
+- Has a personality and working philosophy (SOUL.md)
+- Has an identity card (IDENTITY.md)
+- Remembers everything important across sessions (MEMORY.md)
+- Knows what tools and resources are available (TOOLS.md)
+- Has recurring scheduled responsibilities (HEARTBEAT.md)
+
+## The 6-File Structure
+
+Every agent workspace contains exactly six markdown files. No more, no less. This constraint is intentional — it forces clarity and prevents bloat.
+
+```
+workspace-<agent-id>/
+├── AGENTS.md        ← Identity, protocols, responsibilities, scope
+├── SOUL.md          ← Personality, values, working style
+├── IDENTITY.md      ← Structured identity card
+├── MEMORY.md        ← Long-term memory (loaded every session)
+├── TOOLS.md         ← Available tools, shared resources
+└── HEARTBEAT.md     ← Recurring scheduled tasks
+```
+
+### AGENTS.md — The Job Description
+
+This is the most important file. It defines who the agent is, what it does, and how it operates. Every agent reads this file at the start of every session.
+
+**Required sections:**
+- **Identity** — Agent name, company, model, reporting line
+- **Session Start Protocol** — What to read and check before doing anything
+- **Responsibilities** — Exactly what this agent owns
+- **Ticket Types** — What tickets this agent creates and receives
+- **Shared Learnings Scope** — Which knowledge directories this agent reads and writes
+- **What I Do NOT Do** — Explicit boundaries (just as important as responsibilities)
+- **Out-of-Lane Protocol** — What to do when a task arrives outside scope
+
+The "What I Do NOT Do" section is what makes ONXZA agents reliable. An agent that knows its boundaries will route work correctly instead of producing mediocre results outside its expertise.
+
+### SOUL.md — The Personality
+
+SOUL.md defines how an agent thinks, not just what it does. Two agents with identical responsibilities but different SOUL.md files will approach the same task differently.
+
+A good SOUL.md captures:
+- The agent's relationship to its domain
+- Its decision-making philosophy
+- Its communication style
+- What it values when making tradeoffs
+
+See the [SOUL.md Guide](/docs/agent-development/soul-guide) for detailed writing instructions.
+
+### IDENTITY.md — The ID Card
+
+A structured, machine-readable identity file with consistent fields:
+
+```markdown
+# IDENTITY.md
+- **Full Name:** DTP_ONXZA_Architect
+- **Company:** DevGru Technology Products
+- **Department:** ONXZA
+- **Role:** Platform Architect
+- **Model:** claude-opus-4-6
+- **Reports To:** DTP_CEO
+- **Workspace:** workspace-dtp-onxza-architect
+- **Shared Learnings Read:** shared-learnings/global/, shared-learnings/DTP/
+- **Shared Learnings Write:** shared-learnings/DTP/
+```
+
+This file is referenced by other agents and by ONXZA tooling for agent discovery and routing.
+
+### MEMORY.md — Persistent Memory
+
+MEMORY.md is the agent's long-term memory. It persists across sessions, gateway restarts, and model changes. Every session starts by reading this file.
+
+See the [MEMORY.md Guide](/docs/agent-development/memory-guide) for best practices.
+
+### TOOLS.md — Available Resources
+
+Lists the tools, shared resources, and integration endpoints available to this agent. This is not about what the agent *can* do — it is about what resources it has access to.
+
+```markdown
+# TOOLS.md — DTP_ONXZA_Architect
+## Available Tools
+- Architecture diagramming tools
+- ADR template
+- Technical review tools
+
+## Shared Resources
+- Governance docs: ~/.openclaw/workspace/docs/
+- Ticket system: ~/.openclaw/workspace/tickets/
+- Shared learnings: shared-learnings/global/, shared-learnings/DTP/
+```
+
+### HEARTBEAT.md — Scheduled Work
+
+Defines recurring tasks the agent performs on a schedule — health checks, inbox scans, proactive work loops. The ONXZA dispatcher reads this file to trigger agent sessions at defined intervals.
+
+## Creating an Agent
+
+Use the ONXZA CLI to scaffold a new agent:
+
+```bash
+onxza agent create DTP_ONXZA_Architect
+```
+
+This command:
+1. Parses the agent name (Company\_Department\_Role format)
+2. Creates the workspace directory
+3. Renders all 6 template files with Mustache variable substitution
+4. Runs TORI-QMD validation on every file
+5. Registers the agent in `openclaw.json`
+6. Creates a safety checkpoint
+
+After scaffolding, customize AGENTS.md and SOUL.md with the agent's specific responsibilities and personality. Then validate:
+
+```bash
+onxza agent validate dtp-onxza-architect
+```
+
+## Agent Naming Convention
+
+Agent names follow a strict `Company_Department_Role` pattern:
+
+| Part | Example | Rules |
+|---|---|---|
+| Company | `DTP` | 2–6 uppercase chars, registered in openclaw.json |
+| Department | `ONXZA` | Uppercase, maps to project or team |
+| Role | `Architect` | PascalCase, describes the agent's function |
+
+The CLI converts this to a kebab-case agent ID: `dtp-onxza-architect`.
+
+## Agent Lifecycle
+
+```
+Create → Training (first 10 tasks) → Active → Retire
+```
+
+- **Training mode:** The first 10 tasks are tracked with extra quality metrics. This is the agent's learning period.
+- **Active:** Normal operation. The agent processes tickets, updates memory, and contributes shared learnings.
+- **Retire:** When an agent is no longer needed, `onxza agent retire` archives its learnings, removes it from the registry, and preserves the workspace for audit.
+
+## TORI-QMD Validation
+
+Every agent file must pass TORI-QMD validation — a quality gate that checks for required fields, credit lines, and structural integrity. Validation runs automatically during `agent create` and can be triggered manually:
+
+```bash
+onxza agent validate <agent-id>
+onxza validate --agent <workspace-path>
+```
+
+Files that fail validation cannot be committed (enforced by the pre-commit hook installed during `onxza init`).
+
+## What Makes a Good Agent
+
+The best ONXZA agents share these traits:
+
+1. **Narrow scope, deep expertise** — An agent that does one thing exceptionally beats an agent that does ten things adequately
+2. **Clear boundaries** — The "What I Do NOT Do" section is filled out thoroughly
+3. **Rich SOUL.md** — The personality file goes beyond generic statements to capture genuine working philosophy
+4. **Active memory** — MEMORY.md is regularly updated with learnings, not just session timestamps
+5. **Proper routing** — When a task arrives outside scope, the agent routes it immediately instead of attempting it
+
+---
+
+*Next: [SOUL.md Guide →](/docs/agent-development/soul-guide)*

@@ -1,45 +1,105 @@
-# Getting Started
+# Getting Started with ONXZA
 
-> This guide walks you through installing ONXZA and creating your first agent.
+> ONXZA is an AI company operating system. You define agents with roles, responsibilities, and governance rules — ONXZA runs them.
 
 ## Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- **Node.js 18+**
+- **npm** (or yarn)
 - A terminal
-
-## Installation
-
-```bash
-npm install -g onxza
-```
-
-## Initialize a Workspace
-
-```bash
-onxza init my-workspace
-cd my-workspace
-```
-
-This creates a new ONXZA workspace with:
-- `openclaw.json` — Configuration file
-- `agents/` — Agent definitions
-- `companies/` — Company registry
-- `shared-learnings/` — Knowledge base
-- `tickets/` — Inter-agent task system
-
-## Create Your First Agent
-
-```bash
-onxza agent create my-first-agent --company my-company
-```
-
-## Next Steps
-
-- Read the [Architecture Overview](/docs/architecture) to understand the platform
-- Explore the [FAAILS Protocol](/docs/faails) for governance standards
-- Check the [CLI Reference](/docs/cli-reference) for all available commands
+- An API key for Anthropic or OpenAI *(optional if using a local LLM)*
 
 ---
 
-*Content will be expanded as ONXZA v0.1 development progresses.*
+## Step 1 — Install
+
+```bash
+npm install -g onxza
+onxza --version
+```
+
+Expected output:
+```
+0.1.0
+```
+
+---
+
+## Step 2 — Initialize a Workspace
+
+```bash
+onxza init my-company
+```
+
+This creates the ONXZA workspace at `~/.openclaw/`:
+
+```
+~/.openclaw/
+├── openclaw.json         # Installation config + agent registry
+├── workspace/
+│   ├── tickets/          # Ticket system (open/, pending/, closed/)
+│   ├── shared-learnings/ # Cross-agent knowledge base
+│   └── docs/             # Governance documents
+└── scripts/              # Automation pipeline
+```
+
+---
+
+## Step 3 — Create Your First Agent
+
+ONXZA agents follow a strict naming convention: `Company_Department_Role`.
+
+```bash
+onxza agent create MyCompany_Research_Analyst
+```
+
+Six files define every agent:
+
+| File | Purpose |
+|------|---------|
+| `AGENTS.md` | Operating instructions — identity, responsibilities, ticket types |
+| `SOUL.md` | Persona, voice, and decision-making style |
+| `IDENTITY.md` | Machine-readable metadata (ID, company, model) |
+| `MEMORY.md` | Persistent session memory — written at end, read at start |
+| `TOOLS.md` | Available tools and usage guidance |
+| `HEARTBEAT.md` | Cron-compatible execution spec |
+
+---
+
+## Step 4 — Assign Work
+
+```bash
+onxza tickets create \
+  --summary "Research top 5 competitors" \
+  --type task \
+  --assigned-to mycompany-research-analyst \
+  --priority high
+```
+
+Then run the dispatcher to notify the agent:
+
+```bash
+onxza dispatcher run
+```
+
+---
+
+## Step 5 — Check Status
+
+```bash
+onxza status          # System overview
+onxza agent list      # All registered agents
+```
+
+---
+
+## Next Steps
+
+- **[Quickstart Guide](/docs/quickstart)** — Full 10-minute walkthrough with expected output
+- **[Agent Development](/docs/agent-development)** — Anatomy of an agent, SOUL.md, MEMORY.md
+- **[FAAILS Protocol](/docs/faails)** — The governance standard underlying ONXZA
+- **[CLI Reference](/docs/cli-reference)** — Complete command reference
+
+---
+
+*Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator). Powered by DevGru US Inc. DBA DevGru Technology Products. Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.*

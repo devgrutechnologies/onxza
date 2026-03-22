@@ -1,0 +1,197 @@
+# MEMORY.md Guide
+
+> MEMORY.md is the agent's long-term memory — the file that persists across sessions, gateway restarts, and model changes. It is the difference between an agent that starts fresh every time and one that learns from experience.
+
+## Why Memory Matters
+
+Without MEMORY.md, every session is a cold start. The agent does not know what it completed yesterday, what patterns it discovered, or what mistakes it already corrected. With MEMORY.md, the agent has continuity — it picks up where it left off.
+
+Memory is also the mechanism for institutional knowledge transfer. When agents are retired, their MEMORY.md files are archived. When new agents are created, they can reference predecessor memory files to bootstrap domain knowledge.
+
+## Required Sections
+
+Every MEMORY.md must include these sections at minimum:
+
+### Initialized Date and Status
+
+```markdown
+# MEMORY.md — DTP_ONXZA_Architect
+**Initialized:** 2026-03-17
+**Status:** Active
+```
+
+Status values: `Active`, `Training` (first 10 tasks), `Retired`, `Suspended`.
+
+### Company Context
+
+A brief paragraph explaining the company and this agent's place within it. This provides orientation for every session start.
+
+```markdown
+## Company Context
+DevGru Technology Products is part of the DevGru portfolio managed by Aaron Gear.
+ONXZA is a complex AI agent orchestration platform. As architect, I define the
+system design that Backend, CLI, and other agents implement.
+```
+
+### Active Projects
+
+A running list of what the agent is currently working on. This prevents duplicate work and helps the agent prioritize.
+
+```markdown
+## Active Projects
+- ONXZA architecture design v1
+- FAAILS specification suite
+- MPI benchmark methodology
+```
+
+### Key Learnings
+
+The most important section. This is where the agent records patterns, discoveries, and institutional knowledge that should persist indefinitely.
+
+```markdown
+## Key Learnings
+- openclaw.json schema v1.0.0 uses JSON Schema Draft 2020-12. Strict on core
+  sections, extensible on channels/plugins.
+- Nextra v3 requires _meta.ts (not _meta.json) and does not support useNextSeoProps.
+- FVP verification should complete within 15 minutes for written content.
+```
+
+### Session History
+
+A chronological log of completed work. Each entry should be one line — date, ticket ID, and a brief summary of what was delivered.
+
+```markdown
+## Session History
+- 2026-03-18: TICKET-027 completed — Defined openclaw.json JSONSchema v1.0.0
+- 2026-03-19: TICKET-018 completed — MPI Logging Architecture spec (19KB)
+- 2026-03-20: TICKET-011 completed — Docs site framework decision + scaffold
+```
+
+## Writing Good Memory Entries
+
+### Be Specific and Factual
+
+**Good:** "Nextra v3 requires \_meta.ts files, not \_meta.json. Migration broke 3 pages before we discovered this."
+
+**Bad:** "Had some issues with Nextra configuration."
+
+The first version prevents the same mistake from happening again. The second is useless.
+
+### Include Quantities and Outcomes
+
+**Good:** "TICKET-018 completed — MPI Logging Architecture spec (19KB, 10 sections). Unblocks TICKET-019 (Backend) and TICKET-020 (CLI)."
+
+**Bad:** "Finished the MPI logging ticket."
+
+Numbers and dependency links help the agent understand the scope and impact of past work.
+
+### Record Decisions and Reasoning
+
+When the agent makes a significant choice, record both the decision and why.
+
+```markdown
+- Framework decision: Chose Nextra over Docusaurus for docs site.
+  Reason: Stack alignment (already using Next.js), faster setup,
+  better MDX support. Tradeoff: smaller community than Docusaurus.
+```
+
+Future sessions can revisit this reasoning instead of re-debating the same decision.
+
+### Flag Unresolved Issues
+
+If something is blocked or needs follow-up, make it visible.
+
+```markdown
+- NPM_TOKEN needed for publish pipeline — escalated to Aaron (ESCALATION-20260322).
+  Cannot publish until resolved.
+```
+
+This prevents the agent from attempting the same blocked action in the next session.
+
+## Memory Hygiene
+
+### Keep It Under Control
+
+MEMORY.md is read at the start of every session. If it grows too large, it wastes context window and slows session starts. Guidelines:
+
+- **Session history:** Keep the last 15–20 entries. Archive older entries to a separate file if needed.
+- **Key learnings:** Consolidate related learnings periodically. Five entries about Nextra quirks should become one comprehensive entry.
+- **Active projects:** Remove completed projects. This is a live list, not a historical record.
+
+### Consolidation Schedule
+
+After every 10 completed tickets, review MEMORY.md:
+1. Archive session history entries older than 30 days
+2. Consolidate duplicate or related key learnings
+3. Remove completed items from active projects
+4. Verify all flagged issues are still relevant
+
+### Never Delete Learnings
+
+Consolidate them, rewrite them for clarity, merge duplicates — but never delete a learning entirely. If an agent discovered something once, it should not have to discover it again.
+
+## Task State Tracking
+
+MEMORY.md includes a current task state field that helps with session continuity:
+
+```markdown
+## Current Task
+TASK_STATE: ACTIVE — TICKET-20260322-DTP-018 (MPI Logging Architecture)
+```
+
+Valid states:
+- `IDLE` — No active task
+- `ACTIVE` — Working on a specific ticket
+- `BLOCKED` — Waiting on a dependency
+- `PHASE_1_COMPLETE` — Think phase done, ready for execution
+- `PHASE_2_COMPLETE` — Execution done, ready for verification
+
+This is especially important for the Gateway Restart Protocol — when an agent session restarts, it reads MEMORY.md to determine where it left off instead of starting the ticket from scratch.
+
+## Memory Isolation
+
+ONXZA enforces memory isolation between companies. An agent working for Company A cannot read memory files belonging to Company B's agents. This is defined in AGENTS.md through the shared learnings scope:
+
+```markdown
+**Shared Learnings Read:** shared-learnings/global/, shared-learnings/DTP/
+**Shared Learnings Write:** shared-learnings/DTP/
+```
+
+Agents can read from `global/` (cross-company knowledge) and their own company directory. They can only write to their company directory. Promotion from company to global requires PM approval via the `onxza learnings promote` command.
+
+## Template
+
+```markdown
+# MEMORY.md — {{AGENT_NAME}}
+**Initialized:** {{CREATED_DATE}}
+**Status:** Active
+
+## Company Context
+[Brief description of the company and this agent's role within it.]
+
+## Active Projects
+*(none yet)*
+
+## Key Learnings
+*(empty — to be filled as agent operates)*
+
+## Current Task
+TASK_STATE: IDLE
+
+## Session History
+*(empty)*
+```
+
+## Common Mistakes
+
+| Mistake | Impact | Fix |
+|---|---|---|
+| Never updating memory | Agent re-discovers the same things every session | Update after every completed ticket |
+| Writing vague entries | Entries provide no actionable information | Include specifics: numbers, ticket IDs, file paths |
+| Memory file grows to 500+ lines | Wastes context window, slows sessions | Consolidate every 10 tickets |
+| No task state tracking | Agent restarts from scratch after gateway restart | Always maintain TASK_STATE field |
+| Storing secrets in memory | Security risk — memory files are plain text | Use TOOLS.md for credential references, never values |
+
+---
+
+*Previous: [SOUL.md Guide ←](/docs/agent-development/soul-guide) · Next: [Skills Introduction →](/docs/agent-development/skills-intro)*

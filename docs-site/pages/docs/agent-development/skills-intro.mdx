@@ -1,0 +1,222 @@
+# Skills Introduction
+
+> Skills are reusable capability packages that extend what an agent can do — domain knowledge, tool integrations, automation scripts, and specialized workflows, all bundled as portable markdown and code.
+
+## What Is a Skill?
+
+A skill is a self-contained package that gives an agent new capabilities. Instead of encoding every piece of domain knowledge directly into an agent's files, skills let you modularize expertise into shareable, versioned units.
+
+A skill might be:
+- A web scraping methodology with best practices and code templates
+- An API integration guide with authentication patterns and error handling
+- A content creation framework with style guides and quality checklists
+- A deployment automation workflow with scripts and rollback procedures
+
+Skills are installed per-agent or globally, and they show up in the agent's available tooling during every session.
+
+## Skill Structure
+
+Every skill is a directory containing a `SKILL.md` file and optional supporting resources:
+
+```
+skills/
+└── web-scraper/
+    ├── SKILL.md           ← Primary skill file (always required)
+    ├── references/        ← Supporting documentation
+    │   ├── api-docs.md
+    │   └── error-codes.md
+    └── scripts/           ← Automation scripts
+        ├── scrape.py
+        └── validate.sh
+```
+
+### SKILL.md — The Skill Definition
+
+The `SKILL.md` file is the entry point. It contains everything the agent needs to understand and use the skill: purpose, instructions, examples, and references to supporting files.
+
+```markdown
+---
+name: web-scraper
+version: 1.0.0
+owner: dtp-onxza-backend
+created: 2026-03-15
+tags: scraping, automation, data-collection
+summary: "Web scraping toolkit with rate limiting, error handling, and output validation."
+---
+
+# Web Scraper Skill
+
+## When to Use This Skill
+- Extracting structured data from web pages
+- Monitoring pages for changes
+- Collecting data from paginated API endpoints
+
+## Instructions
+[Step-by-step usage guide...]
+
+## Examples
+[Worked examples with input and expected output...]
+```
+
+### Required SKILL.md Fields
+
+| Field | Description |
+|---|---|
+| `name` | Unique skill identifier (kebab-case) |
+| `version` | Semantic version (major.minor.patch) |
+| `owner` | Agent ID that maintains this skill |
+| `created` | Creation date (ISO 8601) |
+| `tags` | Comma-separated discovery tags |
+| `summary` | One-line description |
+| `credit_line` | Present (required by TORI-QMD) |
+
+## Installing Skills
+
+### From the Marketplace
+
+```bash
+onxza skill install web-scraper --agent dtp-onxza-backend
+```
+
+This downloads the skill from the ONXZA marketplace and installs it into the specified agent's skill directory.
+
+### Scoping Options
+
+Skills can be installed at three scopes:
+
+| Scope | Flag | Location | Who Can Use It |
+|---|---|---|---|
+| Agent | `--agent <id>` | Agent's workspace `skills/` dir | Only that agent |
+| Company | `--scope company --company DTP` | `shared-learnings/DTP/skills/` | All agents in that company |
+| Global | `--scope global` | `shared-learnings/global/skills/` | All agents in the installation |
+
+```bash
+# Agent-scoped (default)
+onxza skill install web-scraper --agent dtp-onxza-backend
+
+# Company-scoped
+onxza skill install web-scraper --scope company --company DTP
+
+# Global
+onxza skill install web-scraper --scope global
+```
+
+### Listing Installed Skills
+
+```bash
+# List all installed skills
+onxza skill list
+
+# Filter by scope
+onxza skill list --scope company --company DTP
+
+# Browse the marketplace
+onxza skill list --marketplace
+```
+
+## Creating Your Own Skills
+
+### Step 1: Scaffold
+
+```bash
+onxza skill create my-skill --agent dtp-onxza-backend
+```
+
+This creates the skill directory structure with a template SKILL.md.
+
+### Step 2: Write the Skill
+
+Fill in the SKILL.md with:
+1. **When to Use** — Clear trigger conditions so the agent knows when this skill applies
+2. **Instructions** — Step-by-step guide, specific enough to execute without guessing
+3. **Examples** — At least two worked examples showing input and expected output
+4. **References** — Links to supporting files, API docs, or external resources
+
+### Step 3: Validate
+
+```bash
+onxza validate skills/my-skill/SKILL.md
+```
+
+TORI-QMD checks for required frontmatter fields, credit line, and structural integrity.
+
+### Step 4: Publish (Optional)
+
+If your skill would be useful to the broader ONXZA community:
+
+```bash
+onxza skill publish ./skills/my-skill/ --name my-skill --version 1.0.0
+```
+
+Published skills are available in the ONXZA marketplace for any installation to install.
+
+## Skill Versioning
+
+Skills follow semantic versioning:
+
+| Change Type | Version Bump | Example |
+|---|---|---|
+| Bug fix, typo correction | Patch (1.0.0 → 1.0.1) | Fixed broken regex in scraper |
+| New capability added | Minor (1.0.0 → 1.1.0) | Added pagination support |
+| Breaking change | Major (1.0.0 → 2.0.0) | Changed output format |
+
+Update installed skills:
+
+```bash
+# Update a specific skill
+onxza skill update web-scraper
+
+# Update all installed skills
+onxza skill update
+```
+
+## Skill Design Principles
+
+### 1. Single Responsibility
+
+Each skill should do one thing well. A "web-scraper" skill should not also handle email sending. If your skill description needs the word "and," consider splitting it into two skills.
+
+### 2. Self-Contained Instructions
+
+An agent reading your SKILL.md should be able to use the skill without consulting external documentation. Include everything needed — or reference supporting files within the skill directory.
+
+### 3. Clear Trigger Conditions
+
+The "When to Use This Skill" section is critical. Agents scan skill descriptions to determine which skill applies to a given task. Vague descriptions lead to incorrect skill selection.
+
+**Good:** "Use when extracting structured data from HTML pages that require JavaScript rendering."
+
+**Bad:** "Use for web stuff."
+
+### 4. Worked Examples
+
+Every skill should include at least two examples: one simple case and one edge case. Examples are the fastest way for an agent to understand expected behavior.
+
+### 5. Error Handling
+
+Document what can go wrong and what the agent should do about it. Rate limits, auth failures, malformed input — anticipate the failure modes.
+
+## Shared Learnings vs. Skills
+
+Skills and shared learnings are related but distinct:
+
+| Aspect | Shared Learnings | Skills |
+|---|---|---|
+| **Purpose** | Record discoveries and patterns | Package reusable capabilities |
+| **Format** | Single markdown file | Directory with SKILL.md + resources |
+| **Created by** | Any agent (as part of work) | Intentionally authored |
+| **Promotion** | Agent → Company → Global pipeline | Marketplace publish |
+| **Contains code** | Rarely | Often (scripts/ directory) |
+| **Versioned** | No | Yes (semver) |
+
+Think of shared learnings as "things we discovered" and skills as "things we packaged for reuse."
+
+## What's Next
+
+- Browse available skills: `onxza skill list --marketplace`
+- Create your first skill: `onxza skill create my-first-skill`
+- Read the [CLI Reference](/docs/cli-reference) for full `onxza skill` command details
+
+---
+
+*Previous: [MEMORY.md Guide ←](/docs/agent-development/memory-guide)*

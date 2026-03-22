@@ -970,7 +970,7 @@ MG    Marcus Gear Inc.             —       10      2026-03-17
 WDC   World Destination Club       MG      29      2026-03-17
 MGA   Marcus Gear Agency           MG      27      2026-03-17
 DTP   DevGru Technology Products   MG      22      2026-03-17
-MGP   Marcus Gear Publishing       MG      7       2026-03-18
+MGP   MG Publishing       MG      7       2026-03-18
 
 Total: 5 companies, 95 agents
 ```
