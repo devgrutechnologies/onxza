@@ -38,6 +38,7 @@ const pullCmd        = require('./commands/pull');
 const securityCmd    = require('./commands/security');
 const validateCmd    = require('./commands/validate');
 const dispatcherCmd  = require('./commands/dispatcher');
+const configCmd      = require('./commands/config');
 
 /**
  * Build and return the root Commander program.
@@ -81,6 +82,7 @@ function createProgram() {
   program.addCommand(securityCmd);
   program.addCommand(validateCmd);
   program.addCommand(dispatcherCmd);
+  program.addCommand(configCmd);
 
   return program;
 }
