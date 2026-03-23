@@ -1,4 +1,5 @@
 export default {
+  "index": "Overview",
   "quickstart": "Quickstart",
   "getting-started": "Getting Started",
   "introduction": "Introduction",
