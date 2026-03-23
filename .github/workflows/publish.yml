@@ -27,6 +27,43 @@ permissions:
   contents: write    # needed for GitHub Release creation
 
 jobs:
+  # ── Gate: TORI-QMD frontmatter validation ─────────────────────
+  tori-validate:
+    name: TORI-QMD Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run TORI-QMD validation
+        run: |
+          set -e
+          FAIL=0
+          while IFS= read -r -d '' file; do
+            result=$(python3 scripts/validate-tori-qmd.py "$file" 2>&1)
+            echo "$result"
+            if echo "$result" | grep -q "^FAIL:"; then
+              FAIL=1
+            fi
+          done < <(find . -name "*.md" \
+            -not -path "./.git/*" \
+            -not -path "*/node_modules/*" \
+            -print0)
+
+          if [ "$FAIL" -eq 1 ]; then
+            echo ""
+            echo "❌ TORI-QMD validation failed — publish blocked."
+            exit 1
+          else
+            echo ""
+            echo "✅ All Markdown files passed TORI-QMD validation."
+          fi
+
   # ── Gate: Run full test suite before any publish ──────────────
   test:
     name: Test Gate
@@ -54,10 +91,10 @@ jobs:
       - name: Verify package builds
         run: npm pack --dry-run
 
-  # ── Publish to npm (only if tests pass) ───────────────────────
+  # ── Publish to npm (only if tests + TORI pass) ────────────────
   publish:
     name: Publish to npm
-    needs: test
+    needs: [tori-validate, test]
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -208,6 +208,53 @@ Good places to start:
 
 ---
 
+## Release Process
+
+Releases are fully automated via GitHub Actions. Maintainers trigger a release by pushing a version tag.
+
+### Prerequisites (one-time setup)
+
+The `NPM_TOKEN` secret must be set in the GitHub repo before any publish will succeed:
+
+1. Create an npm automation token at [npmjs.com](https://www.npmjs.com/settings/~/tokens/granular-access-tokens/new) with **Automation** type and publish access for the `onxza` package.
+2. Add it as a GitHub Actions secret:
+   ```bash
+   gh secret set NPM_TOKEN --body "npm_xxxxxxxxxxxx" --repo devgrutechnologies/onxza
+   ```
+   Or via GitHub UI: **Settings → Secrets and variables → Actions → New repository secret** → name `NPM_TOKEN`.
+
+### How to Cut a Release
+
+```bash
+# 1. Update version in cli/package.json
+cd cli
+npm version patch --no-git-tag-version   # or: minor, major
+
+# 2. Update CHANGELOG.md with the release notes under the new version header
+# 3. Commit the version bump
+git add cli/package.json CHANGELOG.md
+git commit -m "chore: bump version to v0.X.X"
+
+# 4. Tag and push — this triggers the publish workflow
+git tag v0.X.X
+git push origin main --tags
+```
+
+### What the workflow does
+
+The `.github/workflows/publish.yml` pipeline runs automatically on every `v*` tag push:
+
+| Step | Job | Description |
+|---|---|---|
+| 1 | `tori-validate` | Runs TORI-QMD frontmatter validation on all `.md` files |
+| 2 | `test` | Installs deps, runs `npm test`, verifies `npm pack` |
+| 3 | `publish` | Verifies tag matches `package.json` version, runs `npm publish` |
+| 4 | `release` | Creates a GitHub Release with the CHANGELOG section as body |
+
+> **Blocked publish?** If `NPM_TOKEN` is missing or expired, the `publish` job will fail at the "Publish to npm" step. Add/rotate the secret and re-run the workflow manually from the Actions tab.
+
+---
+
 ## Questions
 
 Open a GitHub Discussion or file an issue with the `question` label. We read everything.
