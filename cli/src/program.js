@@ -39,6 +39,7 @@ const securityCmd    = require('./commands/security');
 const validateCmd    = require('./commands/validate');
 const dispatcherCmd  = require('./commands/dispatcher');
 const configCmd      = require('./commands/config');
+const mpiCmd         = require('./commands/mpi');
 
 /**
  * Build and return the root Commander program.
@@ -83,6 +84,7 @@ function createProgram() {
   program.addCommand(validateCmd);
   program.addCommand(dispatcherCmd);
   program.addCommand(configCmd);
+  program.addCommand(mpiCmd);
 
   return program;
 }
