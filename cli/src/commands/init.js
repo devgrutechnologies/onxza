@@ -616,6 +616,7 @@ function runInit(opts) {
 
 const initCmd = new Command('init')
   .description('Initialize a new ONXZA project (workspace, openclaw.json, README, scripts, git hook, checkpoint)')
+  .option('--json', 'Output in JSON format (machine-readable)')
   .argument('[project-name]', 'Name of the project to create (creates ./<project-name>/ directory)')
   .option('--dir <path>', 'Base directory for ONXZA installation (overrides project-name; default: ~/.openclaw)')
   .option('--force', 'Overwrite existing files (default: idempotent — skip existing)')

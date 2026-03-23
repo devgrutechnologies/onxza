@@ -87,7 +87,9 @@ function apiRequest(urlStr, options = {}) {
 // ─── Commands ─────────────────────────────────────────────────────────────────
 
 const skillCmd = new Command('skill')
-  .description('Manage ONXZA skills (install, list, update, publish)');
+  .description('Manage ONXZA skills (install, list, update, publish)')
+  .option('--json', 'Output in JSON format (machine-readable)');
+
 
 // install
 skillCmd

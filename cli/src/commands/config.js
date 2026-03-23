@@ -317,11 +317,6 @@ Examples:
 const configCmd = new Command('config')
   .description('Manage openclaw.json configuration — validate, migrate, inspect')
   .addHelpText('after', `
-Commands:
-  validate   Validate openclaw.json schema and required fields
-  migrate    Migrate openclaw.json to the current schema version
-  version    Show the current schema version
-
 Examples:
   $ onxza config validate
   $ onxza config version

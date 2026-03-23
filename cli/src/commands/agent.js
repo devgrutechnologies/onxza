@@ -32,6 +32,7 @@ const AGENT_FILES = ['AGENTS.md', 'SOUL.md', 'IDENTITY.md', 'MEMORY.md', 'TOOLS.
 
 const createCmd = new Command('create')
   .description('Scaffold a new agent workspace (validates naming, writes 6 files, TORI-QMD, registers, checkpoints)')
+  .option('--json', 'Output in JSON format (machine-readable)')
   .argument('<Company_Dept_Role>', 'Agent name in [Company]_[Dept]_[Role] format (e.g. WDC_Content_BlogWriter)')
   .option('--model <model>', 'Primary LLM model (inferred from role if omitted)')
   .option('--persistence <class>', 'Persistence class: persistent | temporary (default: persistent)', 'persistent')

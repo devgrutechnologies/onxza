@@ -1,0 +1,76 @@
+# ─────────────────────────────────────────────────────────────────
+# ONXZA Docs — Auto-deploy to Vercel on push to main
+#
+# Trigger: any push to main that touches docs-site/ or docs/**
+# Pipeline: checkout → vercel deploy → prod alias
+#
+# Prerequisites (add to GitHub Secrets):
+#   VERCEL_TOKEN    — from vercel.com/account/tokens
+#   VERCEL_ORG_ID   — team_JMmnc0HLY5Vv8SOXwjz0cC79
+#   VERCEL_PROJECT_ID — prj_KjyMraQWut36sX4jtROYyaMGEVPy
+#
+# Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
+# Powered by DevGru US Inc. DBA DevGru Technology Products.
+# Using Powerful Anthropic Models, OpenAI Models, and Local LLMs.
+# ─────────────────────────────────────────────────────────────────
+
+name: Deploy Docs to Vercel
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs-site/**'
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to Vercel (Production)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel environment info
+        run: |
+          vercel pull --yes \
+            --environment=production \
+            --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: docs-site
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build project artifacts
+        run: |
+          vercel build --prod \
+            --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: docs-site
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to Vercel (Production)
+        run: |
+          vercel deploy --prebuilt --prod \
+            --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: docs-site
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

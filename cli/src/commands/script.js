@@ -27,7 +27,9 @@ function stub(name, ticket, detail) {
 }
 
 const scriptCmd = new Command('script')
-  .description('Manage ONXZA automation scripts (create, list, run)');
+  .description('Manage ONXZA automation scripts (create, list, run)')
+  .option('--json', 'Output in JSON format (machine-readable)');
+
 
 scriptCmd
   .command('create <script-name>')
