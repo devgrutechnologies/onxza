@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/devgrutechnologies/onxza/discussions
+    about: Ask questions and discuss ONXZA with the community
+  - name: Discord Community
+    url: https://discord.gg/devgru
+    about: Join our developer community on Discord
