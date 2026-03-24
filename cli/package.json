@@ -1,7 +1,7 @@
 {
   "name": "onxza",
   "version": "0.1.0",
-  "description": "ONXZA CLI — AI Company Operating System. Run agent fleets, manage tickets, enforce quality, and orchestrate AI companies from the terminal.",
+  "description": "ONXZA CLI \u2014 AI Company Operating System. Run agent fleets, manage tickets, enforce quality, and orchestrate AI companies from the terminal.",
   "license": "SEE LICENSE IN LICENSE.md",
   "author": {
     "name": "DevGru Technology Products",
@@ -45,7 +45,9 @@
     "prepublishOnly": "npm test",
     "version:patch": "npm version patch --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
-    "version:major": "npm version major --no-git-tag-version"
+    "version:major": "npm version major --no-git-tag-version",
+    "test:coverage": "c8 --reporter=text --reporter=lcov node bin/onxza.js --version && node bin/onxza.js help",
+    "test:coverage:ci": "c8 --reporter=text --reporter=lcov --lines 70 --functions 70 --branches 70 node bin/onxza.js --version && node bin/onxza.js help"
   },
   "dependencies": {
     "commander": "^12.0.0"
@@ -61,5 +63,21 @@
     "autonomous",
     "company-os",
     "agent-fleet"
-  ]
+  ],
+  "devDependencies": {
+    "c8": "^11.0.0"
+  },
+  "c8": {
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "exclude": [
+      "test/**",
+      "node_modules/**"
+    ],
+    "lines": 70,
+    "functions": 70,
+    "branches": 70
+  }
 }

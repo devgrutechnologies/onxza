@@ -4,6 +4,7 @@
 
 **ONXZA** — AI Company Operating System. Run agent fleets, manage tickets, enforce quality, and orchestrate AI companies from the terminal.
 
+[![CI](https://github.com/devgrutechnologies/onxza/actions/workflows/ci.yml/badge.svg)](https://github.com/devgrutechnologies/onxza/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/onxza)](https://www.npmjs.com/package/onxza)
 [![License](https://img.shields.io/badge/license-MIT%20%2F%20Commercial-blue)](LICENSE.md)
 [![Node.js](https://img.shields.io/node/v/onxza)](package.json)

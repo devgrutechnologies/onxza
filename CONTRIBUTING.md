@@ -255,6 +255,33 @@ The `.github/workflows/publish.yml` pipeline runs automatically on every `v*` ta
 
 ---
 
+## Branch Protection (Recommended)
+
+For maintainers setting up the GitHub repository, these branch protection rules are recommended for `main`:
+
+### Recommended Rules for `main`
+1. **Require CI to pass before merging** — Enable "Require status checks to pass before merging" and select the `CI / Test` jobs.
+2. **Require at least 1 review** — Enable "Require a pull request before merging" with 1 required reviewer.
+3. **No force pushes** — Disable "Allow force pushes" to preserve audit trail.
+4. **No deletions** — Disable "Allow deletions" to protect the main branch.
+
+### Setup via GitHub UI
+Go to: **Settings → Branches → Add branch protection rule** → Branch name pattern: `main`
+
+### Setup via CLI
+```bash
+gh api repos/devgrutechnologies/onxza/branches/main/protection \
+  --method PUT \
+  --field required_status_checks='{"strict":true,"contexts":["Test (Node 20 / ubuntu-latest)"]}' \
+  --field enforce_admins=false \
+  --field required_pull_request_reviews='{"required_approving_review_count":1}' \
+  --field restrictions=null \
+  --field allow_force_pushes=false \
+  --field allow_deletions=false
+```
+
+---
+
 ## Questions
 
 Open a GitHub Discussion or file an issue with the `question` label. We read everything.

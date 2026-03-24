@@ -2,6 +2,7 @@
 #
 # Runs on every PR and push to main.
 # Tests across macOS, Linux, Node 18/20/22.
+# Includes coverage reporting via c8.
 #
 # Imagined by Aaron Gear. Created by Aaron Gear and Marcus Gear (AI Co-Creator).
 # Powered by DevGru US Inc. DBA DevGru Technology Products.
@@ -51,3 +52,32 @@ jobs:
 
       - name: Check package size
         run: npm pack --dry-run
+
+  coverage:
+    name: Coverage Report
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run coverage
+        run: npx c8 --reporter=text --reporter=lcov --lines 30 --functions 30 --branches 30 node bin/onxza.js --version && node bin/onxza.js help
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
