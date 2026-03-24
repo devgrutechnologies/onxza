@@ -56,7 +56,8 @@ onxza init my-company
 <!-- npm publish pending — coming shortly if badge shows "invalid" -->
 
 **Questions?** Open a [Discussion](https://github.com/devgrutechnologies/onxza/discussions).  
-**Found a bug?** Open an [Issue](https://github.com/devgrutechnologies/onxza/issues).
+**Found a bug?** Open an [Issue](https://github.com/devgrutechnologies/onxza/issues).  
+**What changed?** See the [CHANGELOG](CHANGELOG.md).
 
 ---
 
